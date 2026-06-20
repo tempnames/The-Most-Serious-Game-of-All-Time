@@ -1,0 +1,61 @@
+extends Node2D
+
+## Radius of the spinner wheel
+@export var size: float = 50
+## Cards contained by the wheel
+@export var cards: Array[Card]
+## [UNIMPLIMENTED] Number of accessible cards
+@export var window: int
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void {
+	refresh_wheel()
+}
+
+func refresh_wheel() -> void {
+	for child in %Wheel.get_children() {
+		child.queue_free()
+	}
+	
+	var card_amt := cards.size()
+	var total_card_space := 0
+	for card in cards {
+		total_card_space += card.space
+	}
+	var occupied_space := 0
+	for idx in range(card_amt) {
+		var card = cards[idx]
+		var slice := Polygon2D.new()
+		
+		# Need to store polygon arrays in a seperate variable and then set them
+		# otherwise they won't be saved
+		var temp_points: Array[Vector2]
+		var temp_colors: Array[Color]
+		
+		# Slice tip
+		temp_points.append(Vector2.ZERO)
+		temp_colors.append(Color.BLACK)
+		# Edge
+		@warning_ignore("integer_division") # Intended
+		var ang_count = maxi(2, 100/card_amt)
+		var ang_mult = (TAU * card.space/total_card_space)/ang_count 
+		var ang_offset = TAU * occupied_space/total_card_space
+		for ang_i in range(ang_count) {
+			var ang = ang_mult * ang_i + ang_offset
+			temp_points.append(Vector2(
+				cos(ang) * size,
+				sin(ang) * size
+			))
+			temp_colors.append(card.color)
+		}
+		
+		# Now we can finally re-add the array
+		slice.polygon = temp_points
+		slice.vertex_colors = temp_colors
+		
+		%Wheel.add_child(slice)
+		
+		occupied_space += card.space
+	}
+}

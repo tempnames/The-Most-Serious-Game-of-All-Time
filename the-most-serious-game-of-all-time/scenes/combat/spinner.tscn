@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dgx2jsv40toug"]
+
+[ext_resource type="Script" uid="uid://c8suqreit30il" path="res://scripts/combat/spinner.gd" id="1_31fyy"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="2_57omy"]
+
+[sub_resource type="Resource" id="Resource_isosq"]
+script = ExtResource("2_57omy")
+color = Color(0.3553136, 0.35531354, 0.35531357, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_83j1v"]
+script = ExtResource("2_57omy")
+color = Color(0.98039216, 0, 0, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_57omy"]
+script = ExtResource("2_57omy")
+color = Color(0, 0, 0.74509805, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_llb6e"]
+script = ExtResource("2_57omy")
+color = Color(0, 0.8784314, 0, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_3bw6q"]
+script = ExtResource("2_57omy")
+color = Color(0.8117647, 0, 0.6901961, 1)
+space = 2
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[node name="Spinner" type="Node2D" unique_id=1618209727]
+script = ExtResource("1_31fyy")
+cards = Array[ExtResource("2_57omy")]([SubResource("Resource_isosq"), SubResource("Resource_83j1v"), SubResource("Resource_57omy"), SubResource("Resource_llb6e"), SubResource("Resource_3bw6q")])
+
+[node name="Wheel" type="Node2D" parent="." unique_id=1909465768]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1488413441]
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1848755471]
