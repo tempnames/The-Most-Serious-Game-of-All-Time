@@ -8,14 +8,15 @@ extends Node2D
 var wheel: Node2D
 
 func _ready() -> void {
-	if wheel == null {
-		wheel = Node2D.new()
-		add_child(wheel)
-	}
 	refresh_wheel()
 }
 
 func refresh_wheel() -> void {
+	if wheel == null {
+		wheel = Node2D.new()
+		add_child(wheel)
+	}
+	
 	for child in wheel.get_children() {
 		child.queue_free()
 	}
