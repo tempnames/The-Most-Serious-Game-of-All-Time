@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cvxp3frvyn2dc"]
+
+[ext_resource type="PackedScene" uid="uid://cb4td5dnasjl8" path="res://scenes/combat/spinner_collection.tscn" id="1_764e3"]
+[ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
+
+[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qajva")
+player_spinners = NodePath("SpinnerLayer/HBoxContainer/PlayerSpinnersAlign/PlayerSpinners")
+enemy_spinners = NodePath("SpinnerLayer/HBoxContainer/EnemySpinnersAlign/EnemySpinners")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1039495011]
+
+[node name="SpinnerLayer" type="CanvasLayer" parent="." unique_id=576266901]
+follow_viewport_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SpinnerLayer" unique_id=219171783]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1490887551]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="PlayerSpinnersAlign" type="Control" parent="SpinnerLayer/HBoxContainer" unique_id=623640958]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PlayerSpinners" parent="SpinnerLayer/HBoxContainer/PlayerSpinnersAlign" unique_id=1312463831 instance=ExtResource("1_764e3")]
+
+[node name="CenterMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1716569122]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 0)
+
+[node name="EnemySpinnersAlign" type="Control" parent="SpinnerLayer/HBoxContainer" unique_id=212576653]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="EnemySpinners" parent="SpinnerLayer/HBoxContainer/EnemySpinnersAlign" unique_id=2050001492 instance=ExtResource("1_764e3")]
+max_wheel_size = 200.0
+
+[node name="RightMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1977769760]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
