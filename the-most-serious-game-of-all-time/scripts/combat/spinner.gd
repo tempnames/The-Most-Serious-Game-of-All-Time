@@ -3,9 +3,7 @@ extends Node2D
 ## Radius of the spinner wheel
 @export var size: float = 50
 ## Cards contained by the wheel
-@export var cards: Array[Card]
-## [UNIMPLIMENTED] Number of accessible cards
-@export var window: int
+@export var data: SpinnerData
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,10 +16,10 @@ func refresh_wheel() -> void {
 		child.queue_free()
 	}
 	
-	var card_amt := cards.size()
+	var card_amt := data.cards.size()
 	var slice_size := TAU/card_amt
 	for idx in range(card_amt) {
-		var card = cards[idx]
+		var card = data.cards[idx]
 		var slice := Polygon2D.new()
 		
 		# Need to store polygon arrays in a seperate variable and then set them
