@@ -19,11 +19,7 @@ func refresh_wheel() -> void {
 	}
 	
 	var card_amt := cards.size()
-	var total_card_space := 0
-	for card in cards {
-		total_card_space += card.space
-	}
-	var occupied_space := 0
+	var slice_size := TAU/card_amt
 	for idx in range(card_amt) {
 		var card = cards[idx]
 		var slice := Polygon2D.new()
@@ -39,8 +35,9 @@ func refresh_wheel() -> void {
 		# Edge
 		@warning_ignore("integer_division") # Intended
 		var ang_count = maxi(2, 100/card_amt)
-		var ang_mult = (TAU * card.space/total_card_space)/ang_count 
-		var ang_offset = TAU * occupied_space/total_card_space
+		
+		var ang_mult = slice_size/ang_count 
+		var ang_offset = idx * slice_size
 		for ang_i in range(ang_count) {
 			var ang = ang_mult * ang_i + ang_offset
 			temp_points.append(Vector2(
@@ -55,7 +52,5 @@ func refresh_wheel() -> void {
 		slice.vertex_colors = temp_colors
 		
 		%Wheel.add_child(slice)
-		
-		occupied_space += card.space
 	}
 }

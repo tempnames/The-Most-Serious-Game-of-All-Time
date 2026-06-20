@@ -26,7 +26,6 @@ metadata/_custom_type_script = "uid://dh7lxqk62ctav"
 [sub_resource type="Resource" id="Resource_3bw6q"]
 script = ExtResource("2_57omy")
 color = Color(0.8117647, 0, 0.6901961, 1)
-space = 2
 metadata/_custom_type_script = "uid://dh7lxqk62ctav"
 
 [node name="Spinner" type="Node2D" unique_id=1618209727]
