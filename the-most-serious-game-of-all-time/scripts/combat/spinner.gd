@@ -1,18 +1,22 @@
+class_name Spinner
 extends Node2D
 
 ## Radius of the spinner wheel
 @export var size: float = 50
 ## Cards contained by the wheel
 @export var data: SpinnerData
+var wheel: Node2D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void {
+	if wheel == null {
+		wheel = Node2D.new()
+		add_child(wheel)
+	}
 	refresh_wheel()
 }
 
 func refresh_wheel() -> void {
-	for child in %Wheel.get_children() {
+	for child in wheel.get_children() {
 		child.queue_free()
 	}
 	
@@ -49,6 +53,6 @@ func refresh_wheel() -> void {
 		slice.polygon = temp_points
 		slice.vertex_colors = temp_colors
 		
-		%Wheel.add_child(slice)
+		wheel.add_child(slice)
 	}
 }
