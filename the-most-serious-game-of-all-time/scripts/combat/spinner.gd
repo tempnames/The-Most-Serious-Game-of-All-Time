@@ -7,11 +7,51 @@ extends Node2D
 @export var size: float = 50
 ## Cards contained by the wheel
 @export var data: SpinnerData
+## Multiplier to the speed at which the wheel slows down after being spun
+@export var rotation_decay_mult := 2.0
 var wheel: Node2D
+var first_card_idx: int
+var rotation_velocity := 0.0
 
 
 func _ready() -> void {
 	refresh_wheel()
+	align_wheel()
+}
+
+func _process(delta: float) -> void {
+	if abs(rotation_velocity) > 0 {
+		var rot_amt := TAU * delta
+		if abs(rotation_velocity) > rot_amt {
+			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
+			rotate(rotation_velocity * delta * rotation_decay_mult)
+			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
+		} else {
+			rotation_velocity = 0
+			align_wheel()
+		}
+	}
+	if Input.is_action_just_pressed("test") {
+		spin()
+	}
+}
+
+func align_wheel() -> void {
+	var slice_ang := TAU/data.cards.size()
+	var total_window_range := data.window * slice_ang
+	rotation = PI - total_window_range/2 + first_card_idx * slice_ang
+}
+
+func spin() -> void {
+	var old_card_idx := first_card_idx
+	first_card_idx = randi_range(0, data.cards.size())
+	
+	var card_offset := posmod(first_card_idx - old_card_idx, data.cards.size())
+	var card_ang := TAU/data.cards.size()
+	var no_op_cycles := 4
+	# Integral magic 
+	const magic_const = 2*sqrt(PI)
+	rotation_velocity += magic_const * sqrt(card_ang * card_offset + TAU * no_op_cycles)
 }
 
 ## Only adjust the polygon points
