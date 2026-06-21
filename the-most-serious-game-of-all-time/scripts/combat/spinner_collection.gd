@@ -1,6 +1,6 @@
 extends Control
 
-@export var left: bool = false
+@export var right: bool = false
 @export var padding: float = 10.0
 @export var max_wheel_size: float = 100
 @export var spinners: Array[SpinnerData]:
@@ -23,7 +23,7 @@ func _process(delta: float) -> void {
 	var pos := (size.y-total_height)/2 + wheel_height/2
 	var pos_inc := wheel_height+padding
 	for spinner in spinner_nodes {
-		spinner.left = left
+		spinner.right = right
 		spinner.size = wheel_height/2
 		spinner.position.y = pos
 		spinner.resize_wheel()

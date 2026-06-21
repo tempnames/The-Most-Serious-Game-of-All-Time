@@ -1,18 +1,21 @@
 class_name Spinner
 extends Node2D
 
-## Should the spinner point left instead of right?
-@export var left: bool = false
+## Is the spinner on the right?
+@export var right: bool = false
 ## Radius of the spinner wheel
 @export var size: float = 50
 ## Cards contained by the wheel
 @export var data: SpinnerData
+
+
 ## Multiplier to the speed at which the wheel slows down after being spun
 @export var rotation_decay_mult := 2.0
 ## Strength of the motion blur
 @export var motion_blur_strength := 0.2
 
 # nodes
+var wheel_bg: Polygon2D
 var wheel: Node2D
 var motion_blur: Polygon2D
 
@@ -20,31 +23,47 @@ var first_card_idx: int
 var rotation_velocity := 0.0
 
 func _enter_tree() -> void {
+	wheel_bg = Polygon2D.new()
+	wheel_bg.color = Color.BLACK
+	add_child(wheel_bg)
+	
 	wheel = Node2D.new()
 	add_child(wheel)
 	
 	motion_blur = Polygon2D.new()
-	
 	add_child(motion_blur)
 }
 
 func _ready() -> void {
 	refresh_wheel()
 	align_wheel()
+	set_slice_alpha(1.0)
 }
 
 func _process(delta: float) -> void {
 	if abs(rotation_velocity) > 0 {
 		var rot_amt := TAU * delta
 		if abs(rotation_velocity) > rot_amt {
+			var sign := 1.0
+			if (right) {
+				sign = -1.0
+			}
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
-			rotate(rotation_velocity * delta * rotation_decay_mult)
+			rotate(sign * rotation_velocity * delta * rotation_decay_mult)
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
 			motion_blur.color.a = motion_blur_strength * rotation_velocity/TAU
 		} else {
 			rotation_velocity = 0
 			align_wheel()
 			motion_blur.color.a = 0
+			for i in range(data.window) {
+				var tentative_slice := wheel.get_child((first_card_idx + i) % data.cards.size())
+				if tentative_slice is not Polygon2D {
+					continue
+				}
+				var slice := tentative_slice as Polygon2D
+				slice.color.a = 1
+			}
 		}
 	}
 	if Input.is_action_just_pressed("test") {
@@ -55,14 +74,25 @@ func _process(delta: float) -> void {
 func align_wheel() -> void {
 	var slice_ang := TAU/data.cards.size()
 	var total_window_range := data.window * slice_ang
-	rotation = PI - total_window_range/2 + first_card_idx * slice_ang
+	
+	rotation = -total_window_range/2 - first_card_idx * slice_ang
+	if right {
+		rotation += PI
+	}
 }
 
 func spin() -> void {
+	set_slice_alpha(0.4)
+	
 	var old_card_idx := first_card_idx
 	first_card_idx = randi_range(0, data.cards.size())
 	
-	var card_offset := posmod(first_card_idx - old_card_idx, data.cards.size())
+	var card_offset: int
+	if right {
+		card_offset = posmod(first_card_idx - old_card_idx, data.cards.size())
+	} else {
+		card_offset = posmod(old_card_idx - first_card_idx, data.cards.size())
+	}
 	var card_ang := TAU/data.cards.size()
 	var no_op_cycles := 4
 	# Integral magic
@@ -70,9 +100,37 @@ func spin() -> void {
 	rotation_velocity += magic_const * sqrt(card_ang * card_offset + TAU * no_op_cycles)
 }
 
+func set_slice_alpha(a: float) -> void {
+	for tentative_slice in wheel.get_children() {
+		if tentative_slice is not Polygon2D {
+			continue
+		}
+		var slice := tentative_slice as Polygon2D
+		slice.color.a = a
+	}
+}
+
 ## Only adjust the polygon points
 ## for UI adaptive resizing
 func resize_wheel() -> void {
+	# For the wheel background
+	if true {
+		var temp_points: Array[Vector2]
+		
+		var ang_count = 100
+		var ang_mult = TAU/ang_count 
+		for ang_i in range(ang_count) {
+			var ang = ang_mult * ang_i
+			temp_points.append(Vector2(
+				cos(ang) * size,
+				sin(ang) * size
+			))
+		}
+		
+		# Now we can finally re-add the array
+		wheel_bg.polygon = temp_points
+	}
+	
 	# For the individual slices
 	var card_amt := data.cards.size()
 	var slice_size := TAU/card_amt
@@ -110,7 +168,6 @@ func resize_wheel() -> void {
 	}
 	
 	# For the motion blur
-	# Need to store polygon arrays in a seperate variable and then set them
 	if true {
 		var temp_points: Array[Vector2]
 		
