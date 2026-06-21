@@ -9,10 +9,24 @@ extends Node2D
 @export var data: SpinnerData
 ## Multiplier to the speed at which the wheel slows down after being spun
 @export var rotation_decay_mult := 2.0
+## Strength of the motion blur
+@export var motion_blur_strength := 0.2
+
+# nodes
 var wheel: Node2D
+var motion_blur: Polygon2D
+
 var first_card_idx: int
 var rotation_velocity := 0.0
 
+func _enter_tree() -> void {
+	wheel = Node2D.new()
+	add_child(wheel)
+	
+	motion_blur = Polygon2D.new()
+	
+	add_child(motion_blur)
+}
 
 func _ready() -> void {
 	refresh_wheel()
@@ -26,9 +40,11 @@ func _process(delta: float) -> void {
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
 			rotate(rotation_velocity * delta * rotation_decay_mult)
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
+			motion_blur.color.a = motion_blur_strength * rotation_velocity/TAU
 		} else {
 			rotation_velocity = 0
 			align_wheel()
+			motion_blur.color.a = 0
 		}
 	}
 	if Input.is_action_just_pressed("test") {
@@ -49,7 +65,7 @@ func spin() -> void {
 	var card_offset := posmod(first_card_idx - old_card_idx, data.cards.size())
 	var card_ang := TAU/data.cards.size()
 	var no_op_cycles := 4
-	# Integral magic 
+	# Integral magic
 	const magic_const = 2*sqrt(PI)
 	rotation_velocity += magic_const * sqrt(card_ang * card_offset + TAU * no_op_cycles)
 }
@@ -57,6 +73,7 @@ func spin() -> void {
 ## Only adjust the polygon points
 ## for UI adaptive resizing
 func resize_wheel() -> void {
+	# For the individual slices
 	var card_amt := data.cards.size()
 	var slice_size := TAU/card_amt
 	var idx := 0
@@ -91,24 +108,52 @@ func resize_wheel() -> void {
 		
 		idx += 1
 	}
+	
+	# For the motion blur
+	# Need to store polygon arrays in a seperate variable and then set them
+	if true {
+		var temp_points: Array[Vector2]
+		
+		var ang_count = 100
+		var ang_mult = TAU/ang_count 
+		for ang_i in range(ang_count) {
+			var ang = ang_mult * ang_i
+			temp_points.append(Vector2(
+				cos(ang) * size,
+				sin(ang) * size
+			))
+		}
+		
+		# Now we can finally re-add the array
+		motion_blur.polygon = temp_points
+	}
 }
 
 ## Recreate the entire spinner
 func refresh_wheel() -> void {
-	if wheel == null {
-		wheel = Node2D.new()
-		add_child(wheel)
-	}
-	
 	for child in wheel.get_children() {
 		child.queue_free()
 	}
 	
+	var avg_color := Oklab.new()
+	var col_count := 0
 	for card in data.cards {
 		var slice := Polygon2D.new()
 		slice.color = card.color
 		wheel.add_child(slice)
+		
+		var new_color := Oklab.from_color(card.color)
+		avg_color.L += new_color.L
+		avg_color.a += new_color.a
+		avg_color.b += new_color.b
+		col_count += 1
 	}
+	avg_color.L /= col_count
+	avg_color.a /= col_count
+	avg_color.b /= col_count
+	
+	motion_blur.color = avg_color.to_color()
+	motion_blur.color.a = 0
 	
 	resize_wheel()
 }

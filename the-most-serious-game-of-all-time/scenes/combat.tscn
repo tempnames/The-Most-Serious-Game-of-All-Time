@@ -2,6 +2,91 @@
 
 [ext_resource type="PackedScene" uid="uid://cb4td5dnasjl8" path="res://scenes/combat/spinner_collection.tscn" id="1_764e3"]
 [ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
+[ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="3_4l26h"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="4_p71o4"]
+
+[sub_resource type="Gradient" id="Gradient_qajva"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.56078434)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wpb14"]
+gradient = SubResource("Gradient_qajva")
+width = 312
+height = 312
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Resource" id="Resource_aic3r"]
+script = ExtResource("4_p71o4")
+color = Color(0, 0.8117647, 0, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_4l26h"]
+script = ExtResource("4_p71o4")
+color = Color(0.8666667, 0, 0, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_p71o4"]
+script = ExtResource("4_p71o4")
+color = Color(0, 0, 0.8509804, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_vcae8"]
+script = ExtResource("4_p71o4")
+color = Color(0.9137255, 0, 0.81960785, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_osi8t"]
+script = ExtResource("4_p71o4")
+color = Color(0.79607844, 0.8745098, 0, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_4gnb8"]
+script = ExtResource("4_p71o4")
+color = Color(0, 0.9411765, 0.9019608, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_sa5k0"]
+script = ExtResource("4_p71o4")
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_qajva"]
+script = ExtResource("3_4l26h")
+cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_aic3r"), SubResource("Resource_4l26h"), SubResource("Resource_p71o4"), SubResource("Resource_vcae8"), SubResource("Resource_osi8t"), SubResource("Resource_4gnb8"), SubResource("Resource_sa5k0")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_hrcy2"]
+script = ExtResource("4_p71o4")
+color = Color(0.3137255, 0.3137255, 0.28235295, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_gvie1"]
+script = ExtResource("4_p71o4")
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_hmy61"]
+script = ExtResource("4_p71o4")
+color = Color(0.8901961, 0.9137255, 0.8509804, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_0qyji"]
+script = ExtResource("4_p71o4")
+color = Color(0.8666667, 0.4117647, 0.5921569, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_8we11"]
+script = ExtResource("3_4l26h")
+cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_hrcy2"), SubResource("Resource_gvie1"), SubResource("Resource_hmy61"), SubResource("Resource_0qyji")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_u07v1"]
+script = ExtResource("4_p71o4")
+color = Color(0.16862746, 0.5176471, 0.34509805, 1)
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_xkyey"]
+script = ExtResource("3_4l26h")
+cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_u07v1")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
 
 [node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners")]
 layout_mode = 3
@@ -11,46 +96,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qajva")
-player_spinners = NodePath("SpinnerLayer/HBoxContainer/PlayerSpinnersAlign/PlayerSpinners")
-enemy_spinners = NodePath("SpinnerLayer/HBoxContainer/EnemySpinnersAlign/EnemySpinners")
+player_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/PlayerSpinners")
+enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1039495011]
-
-[node name="SpinnerLayer" type="CanvasLayer" parent="." unique_id=576266901]
+[node name="Background" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SpinnerLayer" unique_id=219171783]
+[node name="Vingette" type="CanvasLayer" parent="." unique_id=1039495011]
+follow_viewport_enabled = true
+
+[node name="Vingette" type="Sprite2D" parent="Vingette" unique_id=1058719501]
+position = Vector2(576, 324)
+scale = Vector2(3.6923082, 2.076923)
+texture = SubResource("GradientTexture2D_wpb14")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=576266901]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer" unique_id=287317160]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LeftMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1490887551]
+[node name="LetterboxTop" type="ColorRect" parent="UILayer/VBoxContainer" unique_id=1045761509]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/VBoxContainer" unique_id=219171783]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1490887551]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
 
-[node name="PlayerSpinnersAlign" type="Control" parent="SpinnerLayer/HBoxContainer" unique_id=623640958]
+[node name="PlayerSpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1312463831 instance=ExtResource("1_764e3")]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_horizontal = 1
+left = true
+padding = 11.0
+max_wheel_size = 200.0
+spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_qajva")])
 
-[node name="PlayerSpinners" parent="SpinnerLayer/HBoxContainer/PlayerSpinnersAlign" unique_id=1312463831 instance=ExtResource("1_764e3")]
-
-[node name="CenterMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1716569122]
+[node name="CenterMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1716569122]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
 
-[node name="EnemySpinnersAlign" type="Control" parent="SpinnerLayer/HBoxContainer" unique_id=212576653]
+[node name="EnemySpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=2050001492 instance=ExtResource("1_764e3")]
 layout_mode = 2
-size_flags_vertical = 4
-
-[node name="EnemySpinners" parent="SpinnerLayer/HBoxContainer/EnemySpinnersAlign" unique_id=2050001492 instance=ExtResource("1_764e3")]
+size_flags_horizontal = 1
+left = true
 max_wheel_size = 200.0
+spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_8we11"), SubResource("Resource_xkyey")])
 
-[node name="RightMargin" type="ColorRect" parent="SpinnerLayer/HBoxContainer" unique_id=1977769760]
+[node name="RightMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1977769760]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
+
+[node name="LetterboxBottom" type="ColorRect" parent="UILayer/VBoxContainer" unique_id=1527158009]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera" type="Camera2D" parent="." unique_id=971298977]
+position = Vector2(575, 322)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+position_smoothing_enabled = true
+position_smoothing_speed = 50.0
