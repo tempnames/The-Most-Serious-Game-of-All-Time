@@ -1,6 +1,7 @@
+class_name SpinnerCollection
 extends Control
 
-@export var right: bool = false
+@export var enemy: bool = false
 @export var padding: float = 10.0
 @export var max_wheel_size: float = 100
 @export var spinners: Array[SpinnerData]:
@@ -10,8 +11,9 @@ extends Control
 @export var overlays: Array[Texture2D]
 @export var spinner_nodes: Array[Spinner]
 
+signal spinners_updated
+
 func _ready() -> void {
-	
 	refresh_spinners()
 }
 
@@ -23,7 +25,7 @@ func _process(delta: float) -> void {
 	var pos := (size.y-total_height)/2 + wheel_height/2
 	var pos_inc := wheel_height+padding
 	for spinner in spinner_nodes {
-		spinner.right = right
+		spinner.enemy = enemy
 		spinner.size = wheel_height/2
 		spinner.position.y = pos
 		spinner.resize_wheel()
@@ -34,17 +36,33 @@ func _process(delta: float) -> void {
 func refresh_spinners() -> void {
 	var spinner_count := spinners.size()
 	var old_spinner_count := spinner_nodes.size()
+	var queue_emit := false
 	if spinner_count > old_spinner_count {
 		for i in range(old_spinner_count, spinner_count) {
 			var spinner := Spinner.new()
-			spinner.data = spinners[i]
 			spinner_nodes.append(spinner)
+			spinner.spun.connect(_spinners_spun)
 			add_child(spinner)
 		}
+		queue_emit = true
 	} elif spinner_count < old_spinner_count {
 		for i in range(old_spinner_count-1, spinner_count-1, -1) {
 			spinner_nodes[i].queue_free()
 			spinner_nodes.pop_back()
 		}
+		queue_emit = true
 	}
+	for i in range(spinner_count) {
+		if spinner_nodes[i].data != spinners[i] {
+			spinner_nodes[i].data = spinners[i]
+			queue_emit = true
+		}
+	}
+	if queue_emit {
+		spinners_updated.emit()
+	}
+}
+
+func _spinners_spun() -> void {
+	spinners_updated.emit()
 }

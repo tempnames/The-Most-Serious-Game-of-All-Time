@@ -92,7 +92,7 @@ script = ExtResource("3_4l26h")
 cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_u07v1")])
 metadata/_custom_type_script = "uid://csd6wwmur82ks"
 
-[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners")]
+[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "arrows_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,6 +102,7 @@ grow_vertical = 2
 script = ExtResource("1_qajva")
 player_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/PlayerSpinners")
 enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
+arrows_layer = NodePath("Arrows")
 
 [node name="Background" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
@@ -155,7 +156,7 @@ metadata/_edit_lock_ = true
 [node name="EnemySpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=2050001492 instance=ExtResource("1_764e3")]
 layout_mode = 2
 size_flags_horizontal = 1
-right = true
+enemy = true
 max_wheel_size = 200.0
 spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_8we11"), SubResource("Resource_xkyey")])
 
@@ -169,6 +170,8 @@ metadata/_edit_lock_ = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Arrows" type="CanvasLayer" parent="." unique_id=1101736671]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=971298977]
 position = Vector2(575, 322)

@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cn3imiru7oi5l" path="res://scripts/combat/spinner_collection.gd" id="1_h7kuw"]
 
-[node name="SpinnerCollection" type="Control" unique_id=1828790212]
+[node name="SpinnerCollection" type="Control" unique_id=939837582]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_h7kuw")
+metadata/_custom_type_script = "uid://cn3imiru7oi5l"

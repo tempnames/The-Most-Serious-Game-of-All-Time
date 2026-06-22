@@ -1,0 +1,64 @@
+class_name TargetTug
+extends Area2D
+
+@export var manager: Variant # TODO
+@export var active: bool = false
+var collider: CollisionShape2D
+var collider_shape: RectangleShape2D
+
+signal start_arrow()
+signal stop_arrow()
+signal target_registered()
+
+func _enter_tree() -> void {
+	var poly := Polygon2D.new()
+	poly.polygon = [
+		Vector2(0, -12),
+		Vector2(24, -12),
+		Vector2(24, -18),
+		Vector2(48, 0),
+		Vector2(24, 18),
+		Vector2(24, 12),
+		Vector2(0, 12)
+	]
+	poly.vertex_colors = [
+		Color.from_rgba8(128, 68, 58),
+		Color.from_rgba8(191, 112, 99),
+		Color.from_rgba8(191, 112, 99),
+		Color.from_rgba8(227, 170, 160),
+		Color.from_rgba8(191, 112, 99),
+		Color.from_rgba8(191, 112, 99),
+		Color.from_rgba8(128, 68, 58)
+	]
+	add_child(poly)
+	
+	collider = CollisionShape2D.new()
+	collider_shape = RectangleShape2D.new()
+	collider_shape.size = Vector2(80, 60)
+	collider.shape = collider_shape
+	collider.position.x = 20
+	add_child(collider)
+}
+
+func _input(event: InputEvent) -> void {
+	if event is InputEventMouseButton {
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT {
+			if mouse_event.pressed {
+				var collision_area := collider_shape.get_rect()
+				collision_area.position += collider.position
+				if collision_area.has_point(to_local(mouse_event.global_position)) {
+					visible = false
+					start_arrow.emit()
+				}
+			} else {
+				visible = true
+				stop_arrow.emit()
+			}
+		}
+	}
+}
+
+func register_target() -> void {
+	target_registered.emit()
+}

@@ -1,13 +1,14 @@
 class_name Spinner
 extends Node2D
 
-## Is the spinner on the right?
-@export var right: bool = false
+## Is the spinner controlled by the enemy?
+@export var enemy: bool = false
 ## Radius of the spinner wheel
 @export var size: float = 50
 ## Cards contained by the wheel
 @export var data: SpinnerData
 
+signal spun
 
 ## Multiplier to the speed at which the wheel slows down after being spun
 @export var rotation_decay_mult := 2.0
@@ -20,6 +21,7 @@ var wheel: Node2D
 var motion_blur: Polygon2D
 var cap: Polygon2D
 var speed_label: Label
+var target_tugs: Array[TargetTug]
 
 var first_card_idx: int
 var rotation_velocity := 0.0
@@ -64,7 +66,7 @@ func _process(delta: float) -> void {
 		var rot_amt := TAU * delta
 		if abs(rotation_velocity) > rot_amt {
 			var sgn := 1.0
-			if (right) {
+			if enemy {
 				sgn = -1.0
 			}
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
@@ -76,13 +78,24 @@ func _process(delta: float) -> void {
 			align_wheel()
 			motion_blur.color.a = 0
 			for i in range(data.window) {
-				var tentative_slice := wheel.get_child((first_card_idx + i) % data.cards.size())
+				var slice_idx := (first_card_idx + i) % data.cards.size()
+				var tentative_slice := wheel.get_child(slice_idx)
 				if tentative_slice is not Polygon2D {
 					continue
 				}
 				var slice := tentative_slice as Polygon2D
 				slice.color.a = 1
+				
+				if not enemy {
+					var tug := TargetTug.new()
+					tug.global_rotation = wheel.global_rotation + (slice_idx + 0.5) * TAU/data.cards.size()
+					tug.position = size * Vector2.from_angle(tug.global_rotation)
+					target_tugs.push_back(tug)
+					add_child(tug)
+				}
 			}
+			
+			spun.emit()
 		}
 	}
 	if Input.is_action_just_pressed("test") {
@@ -95,19 +108,23 @@ func align_wheel() -> void {
 	var total_window_range := data.window * slice_ang
 	
 	wheel.rotation = -total_window_range/2 - first_card_idx * slice_ang
-	if right {
+	if enemy {
 		wheel.rotation += PI
 	}
 }
 
 func spin() -> void {
 	set_slice_alpha(0.4)
+	for ttug in target_tugs {
+		ttug.queue_free()
+	}
+	target_tugs.clear()
 	
 	var old_card_idx := first_card_idx
 	first_card_idx = randi_range(0, data.cards.size())
 	
 	var card_offset: int
-	if right {
+	if enemy {
 		card_offset = posmod(first_card_idx - old_card_idx, data.cards.size())
 	} else {
 		card_offset = posmod(old_card_idx - first_card_idx, data.cards.size())
