@@ -18,9 +18,13 @@ extends Node2D
 var wheel_bg: Polygon2D
 var wheel: Node2D
 var motion_blur: Polygon2D
+var cap: Polygon2D
+var speed_label: Label
 
 var first_card_idx: int
 var rotation_velocity := 0.0
+var speed := 0
+const SPEED_LABEL_SETTINGS = preload("uid://bajwyx2sc7o2k")
 
 func _enter_tree() -> void {
 	wheel_bg = Polygon2D.new()
@@ -32,6 +36,18 @@ func _enter_tree() -> void {
 	
 	motion_blur = Polygon2D.new()
 	add_child(motion_blur)
+	
+	cap = Polygon2D.new()
+	cap.color = Color.DARK_SLATE_GRAY
+	add_child(cap)
+	
+	var speed_label_container := CenterContainer.new()
+	speed_label_container.use_top_left = true
+	speed_label = Label.new()
+	speed_label.text = "?"
+	speed_label.label_settings = SPEED_LABEL_SETTINGS
+	speed_label_container.add_child(speed_label)
+	add_child(speed_label_container)
 }
 
 func _ready() -> void {
@@ -42,14 +58,17 @@ func _ready() -> void {
 
 func _process(delta: float) -> void {
 	if abs(rotation_velocity) > 0 {
+		speed = randi_range(data.speed_min, data.speed_max)
+		speed_label.text = str(speed)
+		
 		var rot_amt := TAU * delta
 		if abs(rotation_velocity) > rot_amt {
-			var sign := 1.0
+			var sgn := 1.0
 			if (right) {
-				sign = -1.0
+				sgn = -1.0
 			}
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
-			rotate(sign * rotation_velocity * delta * rotation_decay_mult)
+			wheel.rotate(sgn * rotation_velocity * delta * rotation_decay_mult)
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
 			motion_blur.color.a = motion_blur_strength * rotation_velocity/TAU
 		} else {
@@ -75,9 +94,9 @@ func align_wheel() -> void {
 	var slice_ang := TAU/data.cards.size()
 	var total_window_range := data.window * slice_ang
 	
-	rotation = -total_window_range/2 - first_card_idx * slice_ang
+	wheel.rotation = -total_window_range/2 - first_card_idx * slice_ang
 	if right {
-		rotation += PI
+		wheel.rotation += PI
 	}
 }
 
@@ -113,23 +132,9 @@ func set_slice_alpha(a: float) -> void {
 ## Only adjust the polygon points
 ## for UI adaptive resizing
 func resize_wheel() -> void {
-	# For the wheel background
-	if true {
-		var temp_points: Array[Vector2]
-		
-		var ang_count = 100
-		var ang_mult = TAU/ang_count 
-		for ang_i in range(ang_count) {
-			var ang = ang_mult * ang_i
-			temp_points.append(Vector2(
-				cos(ang) * size,
-				sin(ang) * size
-			))
-		}
-		
-		# Now we can finally re-add the array
-		wheel_bg.polygon = temp_points
-	}
+	upd_poly_circle(wheel_bg, size)
+	upd_poly_circle(motion_blur, size)
+	upd_poly_circle(cap, size/3)
 	
 	# For the individual slices
 	var card_amt := data.cards.size()
@@ -166,24 +171,23 @@ func resize_wheel() -> void {
 		
 		idx += 1
 	}
+}
+
+func upd_poly_circle(polygon: Polygon2D, radius: float) -> void {
+	var temp_points: Array[Vector2]
 	
-	# For the motion blur
-	if true {
-		var temp_points: Array[Vector2]
-		
-		var ang_count = 100
-		var ang_mult = TAU/ang_count 
-		for ang_i in range(ang_count) {
-			var ang = ang_mult * ang_i
-			temp_points.append(Vector2(
-				cos(ang) * size,
-				sin(ang) * size
-			))
-		}
-		
-		# Now we can finally re-add the array
-		motion_blur.polygon = temp_points
+	var ang_count = 100
+	var ang_mult = TAU/ang_count 
+	for ang_i in range(ang_count) {
+		var ang = ang_mult * ang_i
+		temp_points.append(Vector2(
+			cos(ang) * radius,
+			sin(ang) * radius
+		))
 	}
+	
+	# Now we can finally re-add the array
+	polygon.polygon = temp_points
 }
 
 ## Recreate the entire spinner

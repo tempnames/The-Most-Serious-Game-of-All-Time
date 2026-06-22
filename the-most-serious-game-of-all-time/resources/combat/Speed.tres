@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://bajwyx2sc7o2k"]
+
+[ext_resource type="FontFile" uid="uid://dtyph7h81gk2v" path="res://assets/fonts/MedievalSharp-Regular.ttf" id="1_cycav"]
+
+[resource]
+font = ExtResource("1_cycav")
+font_size = 48
+font_color = Color(0.81960785, 1, 1, 1)
+shadow_color = Color(0.19215687, 0.58431375, 0.5764706, 1)
