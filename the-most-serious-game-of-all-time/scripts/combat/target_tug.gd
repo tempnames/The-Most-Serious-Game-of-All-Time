@@ -18,27 +18,6 @@ func _enter_tree() -> void {
 	sprite.position.y -= sprite.scale.y * sprite_tex.get_size().y/2
 	add_child(sprite)
 	
-	var poly := Polygon2D.new()
-	poly.polygon = [
-		Vector2(0, -12),
-		Vector2(24, -12),
-		Vector2(24, -18),
-		Vector2(48, 0),
-		Vector2(24, 18),
-		Vector2(24, 12),
-		Vector2(0, 12)
-	]
-	poly.vertex_colors = [
-		Color.from_rgba8(128, 68, 58),
-		Color.from_rgba8(191, 112, 99),
-		Color.from_rgba8(191, 112, 99),
-		Color.from_rgba8(227, 170, 160),
-		Color.from_rgba8(191, 112, 99),
-		Color.from_rgba8(191, 112, 99),
-		Color.from_rgba8(128, 68, 58)
-	]
-	#add_child(poly)
-	
 	collider = CollisionShape2D.new()
 	collider_shape = RectangleShape2D.new()
 	collider_shape.size = Vector2(80, 60)
