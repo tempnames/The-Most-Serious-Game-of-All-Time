@@ -1,8 +1,7 @@
 class_name TargetTug
 extends Area2D
 
-@export var manager: Variant # TODO
-@export var active: bool = false
+@export var valid_targets: Target.Type = Target.Type.NONE
 var collider: CollisionShape2D
 var collider_shape: RectangleShape2D
 
@@ -57,6 +56,10 @@ func _input(event: InputEvent) -> void {
 	}
 }
 
-func register_target() -> void {
+func try_attach(t: TargetLock) -> bool {
+	return (t.lock_type & valid_targets) > Target.Type.NONE
+}
+
+func register_target(_t: TargetLock) -> void {
 	target_registered.emit()
 }

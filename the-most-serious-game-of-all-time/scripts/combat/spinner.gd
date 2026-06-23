@@ -55,7 +55,7 @@ func _enter_tree() -> void {
 	
 	if enemy {
 		var target_lock := TargetLock.new()
-		target_lock.lock_type = TargetLock.TargetType.SPINNER
+		target_lock.lock_type = Target.Type.SPINNER
 		var target_lock_shape := CircleShape2D.new()
 		target_lock_shape.radius = size
 		target_lock.collision_shape = target_lock_shape
@@ -103,6 +103,7 @@ func _process(delta: float) -> void {
 					var tug := TargetTug.new()
 					tug.global_rotation = wheel.global_rotation + (slice_idx + 0.5) * TAU/data.cards.size()
 					tug.position = size * Vector2.from_angle(tug.global_rotation)
+					tug.valid_targets = data.cards[slice_idx].targets
 					target_tugs.push_back(tug)
 					add_child(tug)
 				}

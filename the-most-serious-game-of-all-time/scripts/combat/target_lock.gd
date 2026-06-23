@@ -2,13 +2,7 @@ class_name TargetLock
 extends Area2D
 
 @export var collision_shape: Shape2D
-@export var lock_type: TargetType
-
-enum TargetType {
-	SELF,
-	ENEMY,
-	SPINNER
-}
+@export var lock_type: Target.Type
 
 func _enter_tree() -> void {
 	var collider := CollisionShape2D.new()
