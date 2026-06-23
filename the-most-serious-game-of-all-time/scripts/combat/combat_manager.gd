@@ -3,8 +3,10 @@ extends Control
 @export var player_spinners: SpinnerCollection
 @export var enemy_spinners: SpinnerCollection
 var origin: Option[TargetTug] = Option.none()
-@export var arrows: Dictionary[TargetTug, Arrow]
+var arrows: Dictionary[TargetTug, Arrow]
 @export var arrows_layer: CanvasLayer
+var target_locks: Array[TargetLock]
+var targets: Array[TargetLock]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void {
@@ -18,7 +20,11 @@ func _process(_delta: float) -> void {
 		var c_origin := origin.unwrap_unchecked()
 		var arrow := arrows.get(c_origin) as Arrow
 		if arrow {
-			arrow.target_pos = get_global_mouse_position()
+			if targets.size() == 0 {
+				arrow.target_pos = get_global_mouse_position()
+			} else {
+				arrow.target_pos = targets[targets.size()-1].global_position
+			}
 		}
 	}
 }
@@ -32,6 +38,14 @@ func _on_spinner_refresh() -> void {
 			tug.start_arrow.connect(_start_arrow.bind(tug))
 			tug.stop_arrow.connect(_stop_arrow)
 		}
+		spinner.spinner_lock.and_then(func(lock: TargetLock) {
+			target_locks.push_back(lock)
+			if lock.mouse_exited.is_connected(_exit_lock.bind(lock)) {
+				return
+			}
+			lock.mouse_entered.connect(_enter_lock.bind(lock))
+			lock.mouse_exited.connect(_exit_lock.bind(lock))
+		})
 	}
 }
 
@@ -58,4 +72,13 @@ func _stop_arrow() -> void {
 		}
 		origin = Option.none()
 	}
+}
+
+func _enter_lock(lock: TargetLock) -> void {
+	_exit_lock(lock)
+	targets.push_back(lock)
+}
+
+func _exit_lock(lock: TargetLock) -> void {
+	targets.erase(lock)
 }

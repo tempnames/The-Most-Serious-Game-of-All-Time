@@ -21,7 +21,6 @@ GamestateManager="*uid://mg5lfuj7eihl"
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [file_customization]
 

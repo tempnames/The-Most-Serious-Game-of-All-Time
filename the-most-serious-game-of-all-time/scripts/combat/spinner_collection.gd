@@ -11,6 +11,8 @@ extends Control
 @export var overlays: Array[Texture2D]
 @export var spinner_nodes: Array[Spinner]
 
+var old_wheel_height := 0
+
 signal spinners_updated
 
 func _ready() -> void {
@@ -21,15 +23,16 @@ func _process(delta: float) -> void {
 	var spinner_count := spinners.size()
 	var padding_count := maxi(0, spinner_count-1)
 	var wheel_height := minf(max_wheel_size*2, (size.y - padding*padding_count)/(spinner_count as float))
-	var total_height := wheel_height*spinner_count + padding*padding_count
-	var pos := (size.y-total_height)/2 + wheel_height/2
-	var pos_inc := wheel_height+padding
-	for spinner in spinner_nodes {
-		spinner.enemy = enemy
-		spinner.size = wheel_height/2
-		spinner.position.y = pos
-		spinner.resize_wheel()
-		pos += pos_inc
+	if old_wheel_height != wheel_height {
+		var total_height := wheel_height*spinner_count + padding*padding_count
+		var pos := (size.y-total_height)/2 + wheel_height/2
+		var pos_inc := wheel_height+padding
+		for spinner in spinner_nodes {
+			spinner.size = wheel_height/2
+			spinner.position.y = pos
+			spinner.resize_wheel()
+			pos += pos_inc
+		}
 	}
 }
 
@@ -42,7 +45,7 @@ func refresh_spinners() -> void {
 			var spinner := Spinner.new()
 			spinner_nodes.append(spinner)
 			spinner.spun.connect(_spinners_spun)
-			add_child(spinner)
+			add_child.call_deferred(spinner)
 		}
 		queue_emit = true
 	} elif spinner_count < old_spinner_count {
@@ -54,6 +57,7 @@ func refresh_spinners() -> void {
 	}
 	for i in range(spinner_count) {
 		if spinner_nodes[i].data != spinners[i] {
+			spinner_nodes[i].enemy = enemy
 			spinner_nodes[i].data = spinners[i]
 			queue_emit = true
 		}

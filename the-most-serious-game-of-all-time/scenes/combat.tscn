@@ -99,6 +99,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_qajva")
 player_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/PlayerSpinners")
 enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
@@ -123,6 +124,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="LetterboxTop" type="ColorRect" parent="UILayer/VBoxContainer" unique_id=1045761509]
 custom_minimum_size = Vector2(0, 50)
@@ -132,16 +134,19 @@ color = Color(0, 0, 0, 1)
 [node name="HBoxContainer" type="HBoxContainer" parent="UILayer/VBoxContainer" unique_id=219171783]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="LeftMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1490887551]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
 [node name="PlayerSpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1312463831 instance=ExtResource("1_764e3")]
 layout_mode = 2
 size_flags_horizontal = 1
+mouse_filter = 2
 padding = 11.0
 max_wheel_size = 200.0
 spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_qajva")])
@@ -150,12 +155,14 @@ spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_qajva")])
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
 [node name="EnemySpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=2050001492 instance=ExtResource("1_764e3")]
 layout_mode = 2
 size_flags_horizontal = 1
+mouse_filter = 2
 enemy = true
 max_wheel_size = 200.0
 spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_8we11"), SubResource("Resource_xkyey")])
@@ -163,6 +170,7 @@ spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_8we11"), SubReso
 [node name="RightMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=1977769760]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 

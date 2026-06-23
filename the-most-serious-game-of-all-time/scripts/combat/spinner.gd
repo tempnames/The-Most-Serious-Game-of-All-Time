@@ -22,6 +22,8 @@ var motion_blur: Polygon2D
 var cap: Polygon2D
 var speed_label: Label
 var target_tugs: Array[TargetTug]
+var spinner_lock: Option[TargetLock] = Option.none()
+var spinner_lock_shape: Option[CircleShape2D] = Option.none()
 
 var first_card_idx: int
 var rotation_velocity := 0.0
@@ -50,6 +52,17 @@ func _enter_tree() -> void {
 	speed_label.label_settings = SPEED_LABEL_SETTINGS
 	speed_label_container.add_child(speed_label)
 	add_child(speed_label_container)
+	
+	if enemy {
+		var target_lock := TargetLock.new()
+		target_lock.lock_type = TargetLock.TargetType.SPINNER
+		var target_lock_shape := CircleShape2D.new()
+		target_lock_shape.radius = size
+		target_lock.collision_shape = target_lock_shape
+		add_child(target_lock)
+		spinner_lock = Option.some(target_lock)
+		spinner_lock_shape = Option.some(target_lock_shape)
+	}
 }
 
 func _ready() -> void {
@@ -148,10 +161,15 @@ func set_slice_alpha(a: float) -> void {
 
 ## Only adjust the polygon points
 ## for UI adaptive resizing
+## SHOULD NEVER ADD OR REMOVE NODES [expensive]
 func resize_wheel() -> void {
 	upd_poly_circle(wheel_bg, size)
 	upd_poly_circle(motion_blur, size)
 	upd_poly_circle(cap, size/3)
+	
+	spinner_lock_shape.and_then(func(shape: CircleShape2D) {
+		shape.radius = size
+	})
 	
 	# For the individual slices
 	var card_amt := data.cards.size()
