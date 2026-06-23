@@ -4,12 +4,20 @@ extends Area2D
 @export var valid_targets: Target.Type = Target.Type.NONE
 var collider: CollisionShape2D
 var collider_shape: RectangleShape2D
+const sprite_tex: Texture2D = preload("uid://dd51qno3rnrh1")
 
 signal start_arrow()
 signal stop_arrow()
 signal target_registered()
 
 func _enter_tree() -> void {
+	var sprite := Sprite2D.new()
+	sprite.centered = false
+	sprite.texture = sprite_tex
+	sprite.scale.y = 1.2
+	sprite.position.y -= sprite.scale.y * sprite_tex.get_size().y/2
+	add_child(sprite)
+	
 	var poly := Polygon2D.new()
 	poly.polygon = [
 		Vector2(0, -12),
@@ -29,7 +37,7 @@ func _enter_tree() -> void {
 		Color.from_rgba8(191, 112, 99),
 		Color.from_rgba8(128, 68, 58)
 	]
-	add_child(poly)
+	#add_child(poly)
 	
 	collider = CollisionShape2D.new()
 	collider_shape = RectangleShape2D.new()

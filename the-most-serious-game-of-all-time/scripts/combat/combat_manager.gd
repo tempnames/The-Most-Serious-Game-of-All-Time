@@ -74,9 +74,10 @@ func _start_arrow(o: TargetTug) -> void {
 	o.visible = false
 	if not arrows.has(o) {
 		var arrow := Arrow.new()
-		arrow.texture = preload("res://icon.svg")
-		arrow.region_rect = Rect2(Vector2.ZERO, arrow.texture.get_size())
-		arrow.size.y = 16
+		arrow.texture = preload("uid://dd51qno3rnrh1")
+		arrow.patch_margin_left = 4
+		arrow.patch_margin_right = 16
+		arrow.size.y = 32
 		arrow.global_position = o.global_position
 		arrows_layer.add_child(arrow)
 		arrows.set(o, arrow)
