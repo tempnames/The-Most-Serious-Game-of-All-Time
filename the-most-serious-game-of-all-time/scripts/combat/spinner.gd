@@ -112,9 +112,6 @@ func _process(delta: float) -> void {
 			spun.emit()
 		}
 	}
-	if Input.is_action_just_pressed("test") {
-		spin()
-	}
 }
 
 func align_wheel() -> void {
