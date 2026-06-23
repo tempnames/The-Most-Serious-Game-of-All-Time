@@ -10,6 +10,8 @@ var arrows: Dictionary[TargetTug, Arrow]
 var target_locks: Array[TargetLock]
 var targets: Array[TargetLock]
 
+var temp_artifical_combat_delay: float
+
 enum State {
 	PRESPIN,
 	TARGET,
@@ -43,20 +45,37 @@ func _process(_delta: float) -> void {
 				}
 			}
 		}
+	} elif state == State.COMBAT {
+		temp_artifical_combat_delay -= _delta
+		if temp_artifical_combat_delay <= 0 {
+			spin_btn.disabled = false
+			spin_btn.visible = true
+			state = State.PRESPIN
+			for arrow in arrows.keys() {
+				_detach_arrow(arrow)
+				arrow.visible = false
+			}
+		}
+	}
+}
+
+func _per_tug(action: Callable) -> void {
+	for spinner in player_spinners.spinner_nodes {
+		for tug in spinner.target_tugs {
+			action.call(tug)
+		}
 	}
 }
 
 func _on_spinner_refresh() -> void {
-	for spinner in player_spinners.spinner_nodes {
-		for tug in spinner.target_tugs {
-			if tug.stop_arrow.is_connected(_stop_arrow) {
-				continue
-			}
-			tug.start_arrow.connect(_start_arrow.bind(tug))
-			tug.detach_arrow.connect(_detach_arrow.bind(tug))
-			tug.stop_arrow.connect(_stop_arrow)
+	_per_tug(func(t: TargetTug) {
+		if t.stop_arrow.is_connected(_stop_arrow) {
+			return
 		}
-	}
+		t.start_arrow.connect(_start_arrow.bind(t))
+		t.detach_arrow.connect(_detach_arrow.bind(t))
+		t.stop_arrow.connect(_stop_arrow)
+	})
 	for spinner in enemy_spinners.spinner_nodes {
 		spinner.spinner_lock.and_then(func(lock: TargetLock) {
 			target_locks.push_back(lock)
@@ -119,8 +138,11 @@ func _exit_lock(lock: TargetLock) -> void {
 func _on_target_btn_press() -> void {
 	target_btn.disabled = true
 	target_btn.visible = false
-	spin_btn.disabled = false
-	spin_btn.visible = true
+	_per_tug(func(t: TargetTug) {
+		t.visible = false
+	})
+	state = State.COMBAT
+	temp_artifical_combat_delay = 5.0
 }
 
 func _on_spin_btn_press() -> void {
