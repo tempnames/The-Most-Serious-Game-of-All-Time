@@ -53,6 +53,7 @@ func _on_spinner_refresh() -> void {
 				continue
 			}
 			tug.start_arrow.connect(_start_arrow.bind(tug))
+			tug.detach_arrow.connect(_detach_arrow.bind(tug))
 			tug.stop_arrow.connect(_stop_arrow)
 		}
 	}
@@ -89,17 +90,21 @@ func _stop_arrow() -> void {
 	if origin.is_some() {
 		var c_origin := origin.unwrap_unchecked()
 		if targets.size() == 0 or not c_origin.try_attach(targets[targets.size()-1]) {
-			var arrow_node := arrows.get(c_origin) as Arrow
-			if arrow_node {
-				arrow_node.queue_free()
-				arrows.erase(c_origin)
-			}
-			c_origin.visible = true
+			_detach_arrow(c_origin)
 		} else {
 			c_origin.register_target(targets[targets.size()-1])
 		}
 		origin = Option.none()
 	}
+}
+
+func _detach_arrow(o: TargetTug) {
+	var arrow_node := arrows.get(o) as Arrow
+	if arrow_node {
+		arrow_node.queue_free()
+		arrows.erase(o)
+	}
+	o.visible = true
 }
 
 func _enter_lock(lock: TargetLock) -> void {

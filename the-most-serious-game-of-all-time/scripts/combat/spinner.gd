@@ -89,27 +89,7 @@ func _process(delta: float) -> void {
 		} else {
 			rotation_velocity = 0
 			align_wheel()
-			motion_blur.color.a = 0
-			for i in range(data.window) {
-				var slice_idx := (first_card_idx + i) % data.cards.size()
-				var tentative_slice := wheel.get_child(slice_idx)
-				if tentative_slice is not Polygon2D {
-					continue
-				}
-				var slice := tentative_slice as Polygon2D
-				slice.color.a = 1
-				
-				if not enemy {
-					var tug := TargetTug.new()
-					tug.global_rotation = wheel.global_rotation + (slice_idx + 0.5) * TAU/data.cards.size()
-					tug.position = size * Vector2.from_angle(tug.global_rotation)
-					tug.valid_targets = data.cards[slice_idx].targets
-					target_tugs.push_back(tug)
-					add_child(tug)
-				}
-			}
-			
-			spun.emit()
+			_spin_completed()
 		}
 	}
 }
@@ -145,6 +125,40 @@ func spin() -> void {
 	# Integral magic
 	const magic_const = 2*sqrt(PI)
 	rotation_velocity += magic_const * sqrt(card_ang * card_offset + TAU * no_op_cycles)
+}
+
+func _spin_completed() -> void {
+	motion_blur.color.a = 0
+	for i in range(data.window) {
+		var slice_idx := (first_card_idx + i) % data.cards.size()
+		var tentative_slice := wheel.get_child(slice_idx)
+		if tentative_slice is not Polygon2D {
+			continue
+		}
+		var slice := tentative_slice as Polygon2D
+		slice.color.a = 1
+		
+		if not enemy {
+			var tug := TargetTug.new()
+			tug.global_rotation = wheel.global_rotation + (slice_idx + 0.5) * TAU/data.cards.size()
+			tug.position = size * Vector2.from_angle(tug.global_rotation)
+			tug.valid_targets = data.cards[slice_idx].targets
+			target_tugs.push_back(tug)
+			add_child(tug)
+			tug.target_registered.connect(_card_targeted.bind(tug, slice_idx))
+		}
+	}
+	
+	spun.emit()
+}
+
+func _card_targeted(tug: TargetTug, card_idx: int) -> void {
+	# Detach any others, only one tug is allowed to be active at once
+	for other_tug in target_tugs {
+		if other_tug == tug:
+			continue
+		other_tug.detach_arrow.emit()
+	}
 }
 
 func set_slice_alpha(a: float) -> void {

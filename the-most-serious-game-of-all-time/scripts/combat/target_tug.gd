@@ -8,6 +8,7 @@ const sprite_tex: Texture2D = preload("uid://dd51qno3rnrh1")
 
 signal start_arrow()
 signal stop_arrow()
+signal detach_arrow()
 signal target_registered()
 
 func _enter_tree() -> void {
