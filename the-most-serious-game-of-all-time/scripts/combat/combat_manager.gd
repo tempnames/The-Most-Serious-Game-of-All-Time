@@ -51,6 +51,7 @@ func _on_spinner_refresh() -> void {
 
 func _start_arrow(o: TargetTug) -> void {
 	origin = Option.some(o)
+	#o.visible = false
 	if not arrows.has(o) {
 		var arrow := Arrow.new()
 		arrow.texture = preload("res://icon.svg")
@@ -62,13 +63,17 @@ func _start_arrow(o: TargetTug) -> void {
 	}
 }
 
+# Current goal: Get arrows to stick around
 func _stop_arrow() -> void {
 	if origin.is_some() {
-		var c_origin := origin.unwrap_unchecked()
-		var arrow_node := arrows.get(c_origin) as Arrow
-		if arrow_node {
-			arrow_node.queue_free()
-			arrows.erase(c_origin)
+		if targets.size() == 0 {
+			var c_origin := origin.unwrap_unchecked()
+			var arrow_node := arrows.get(c_origin) as Arrow
+			if arrow_node {
+				arrow_node.queue_free()
+				arrows.erase(c_origin)
+			}
+			c_origin.visible = true
 		}
 		origin = Option.none()
 	}

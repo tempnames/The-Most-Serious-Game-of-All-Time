@@ -48,11 +48,9 @@ func _input(event: InputEvent) -> void {
 				var collision_area := collider_shape.get_rect()
 				collision_area.position += collider.position
 				if collision_area.has_point(to_local(mouse_event.global_position)) {
-					visible = false
 					start_arrow.emit()
 				}
 			} else {
-				visible = true
 				stop_arrow.emit()
 			}
 		}
