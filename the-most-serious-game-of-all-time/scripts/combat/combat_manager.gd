@@ -24,9 +24,12 @@ var spinners_spinning := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void {
-	#target_btn.visible = false
+	target_btn.visible = false
 	#target_btn.disabled = true
 	#target_btn.clicked.connect(_on_target_btn_press)
+	# temp line
+	spin_btn.pressed.connect(_on_target_btn_press)
+	
 	spin_btn.pressed.connect(_on_spin_btn_press)
 	
 	player_spinners.spinners = GamestateManager.inventory
@@ -143,7 +146,8 @@ func _exit_lock(lock: TargetLock) -> void {
 }
 
 func _on_target_btn_press() -> void {
-	target_btn.disabled = true
+	if state != State.TARGET: return
+	#target_btn.disabled = true
 	target_btn.visible = false
 	_per_tug(func(t: TargetTug) {
 		t.visible = false
@@ -153,8 +157,9 @@ func _on_target_btn_press() -> void {
 }
 
 func _on_spin_btn_press() -> void {
-	spin_btn.disabled = true
-	spin_btn.visible = false
+	if state != State.PRESPIN: return
+	#spin_btn.disabled = true
+	#spin_btn.visible = false
 	for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
 		spinner.spin()
 		spinner.spun.connect(_despin.bind(spinner))
@@ -167,7 +172,7 @@ func _despin(spinner: Spinner) -> void {
 	spinners_spinning -= 1
 	if spinners_spinning == 0 {
 		state = State.TARGET
-		target_btn.disabled = false
+		#target_btn.disabled = false
 		target_btn.visible = true
 	}
 }
