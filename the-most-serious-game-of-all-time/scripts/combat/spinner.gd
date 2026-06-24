@@ -17,7 +17,7 @@ signal spun
 
 # nodes
 var wheel_bg: Polygon2D
-var wheel: Node2D
+var wheel: CascadeV3
 var motion_blur: Polygon2D
 var cap: Polygon2D
 var speed_label: Label
@@ -35,7 +35,10 @@ func _enter_tree() -> void {
 	wheel_bg.color = Color.BLACK
 	add_child(wheel_bg)
 	
-	wheel = Node2D.new()
+	wheel = CascadeV3.new()
+	wheel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	wheel.wait_a_frame = true
+	wheel.start_on_ready = false
 	add_child(wheel)
 	
 	motion_blur = Polygon2D.new()
@@ -83,7 +86,7 @@ func _process(delta: float) -> void {
 				sgn = -1.0
 			}
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
-			wheel.rotate(sgn * rotation_velocity * delta * rotation_decay_mult)
+			wheel.rotation += sgn * rotation_velocity * delta * rotation_decay_mult
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
 			motion_blur.color.a = motion_blur_strength * rotation_velocity/TAU
 		} else {
@@ -110,6 +113,9 @@ func spin() -> void {
 		ttug.queue_free()
 	}
 	target_tugs.clear()
+	
+	wheel.cascade_in()
+	await wheel.cascade_in_chain_finished
 	
 	var old_card_idx := first_card_idx
 	first_card_idx = randi_range(0, data.cards.size())
@@ -140,7 +146,7 @@ func _spin_completed() -> void {
 		
 		if not enemy {
 			var tug := TargetTug.new()
-			tug.global_rotation = wheel.global_rotation + (slice_idx + 0.5) * TAU/data.cards.size()
+			tug.global_rotation = wheel.rotation + (slice_idx + 0.5) * TAU/data.cards.size()
 			tug.position = size * Vector2.from_angle(tug.global_rotation)
 			tug.valid_targets = data.cards[slice_idx].targets
 			target_tugs.push_back(tug)
@@ -150,6 +156,10 @@ func _spin_completed() -> void {
 	}
 	
 	spun.emit()
+}
+
+func hide_slices() -> void {
+	wheel.cascade_out()
 }
 
 func _card_targeted(tug: TargetTug, card_idx: int) -> void {

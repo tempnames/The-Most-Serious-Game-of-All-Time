@@ -24,7 +24,7 @@ var spinners_spinning := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void {
-	target_btn.visible = false
+	#target_btn.visible = false
 	#target_btn.disabled = true
 	#target_btn.clicked.connect(_on_target_btn_press)
 	# temp line
@@ -61,6 +61,9 @@ func _process(_delta: float) -> void {
 			for arrow in arrows.keys() {
 				_detach_arrow(arrow)
 				arrow.visible = false
+			}
+			for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
+				spinner.hide_slices()
 			}
 		}
 	}
@@ -148,7 +151,7 @@ func _exit_lock(lock: TargetLock) -> void {
 func _on_target_btn_press() -> void {
 	if state != State.TARGET: return
 	#target_btn.disabled = true
-	target_btn.visible = false
+	#target_btn.visible = false
 	_per_tug(func(t: TargetTug) {
 		t.visible = false
 	})
