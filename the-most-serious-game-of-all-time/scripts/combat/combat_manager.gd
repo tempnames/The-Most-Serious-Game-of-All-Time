@@ -27,7 +27,10 @@ func _ready() -> void {
 	target_btn.visible = false
 	target_btn.pressed.connect(_on_target_btn_press)
 	spin_btn.pressed.connect(_on_spin_btn_press)
+	
+	player_spinners.spinners = GamestateManager.inventory
 	player_spinners.spinners_updated.connect(_on_spinner_refresh)
+	enemy_spinners.spinners = GamestateManager.current_enemy.spinners
 	enemy_spinners.spinners_updated.connect(_on_spinner_refresh)
 	_on_spinner_refresh()
 }

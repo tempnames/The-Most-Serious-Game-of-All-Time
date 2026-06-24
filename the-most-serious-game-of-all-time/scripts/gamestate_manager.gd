@@ -1,19 +1,21 @@
-class_name GameState
 extends Node
 
-@export var current_enemy: Enemy
+@export var current_enemy: EnemyData
 @export var inventory: Array[SpinnerData]
-@export_category("Scenes")
-@export var combat: PackedScene = preload("uid://cvxp3frvyn2dc")
 
-signal switch_to(scene: PackedScene)
+signal switch_to(scene: Master.Scenes)
 
-func new_game() {
+func _ready() -> void {
+	new_game()
+	encounter_enemy(EnemyData.new())
+}
+
+func new_game() -> void {
 	inventory = [SpinnerData.new()]
 	current_enemy = null
 }
 
-func encounter_enemy(enemy: Enemy) {
+func encounter_enemy(enemy: EnemyData) -> void {
 	current_enemy = enemy
-	switch_to.emit(combat)
+	switch_to.emit(Master.Scenes.COMBAT)
 }

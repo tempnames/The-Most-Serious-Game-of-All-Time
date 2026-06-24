@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://d4l2pggbavbjh"]
 
+[ext_resource type="Script" uid="uid://cn8uphrb65a04" path="res://scripts/master.gd" id="1_aynem"]
+
 [node name="Master" type="Control" unique_id=1633964347]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_aynem")

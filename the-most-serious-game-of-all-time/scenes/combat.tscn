@@ -114,7 +114,7 @@ target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBt
 spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn")
 arrows_layer = NodePath("Arrows")
 
-[node name="Background" type="CanvasLayer" parent="." unique_id=1236923710]
+[node name="MainLayer" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
 
 [node name="Vingette" type="CanvasLayer" parent="." unique_id=1039495011]
