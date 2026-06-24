@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://djyvw81tmv7vq"]
+
+[ext_resource type="Shader" uid="uid://crj3nu726xafj" path="res://shaders/health_halo.tres" id="1_h8ekb"]
+[ext_resource type="Script" uid="uid://bh82ie047qrh5" path="res://health_bar.gd" id="2_mbgss"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twesf"]
+shader = ExtResource("1_h8ekb")
+shader_parameter/HealthPercent = 0.8130000386175
+shader_parameter/HealthColor = Color(0.5764706, 0.16862746, 0.49019608, 1)
+shader_parameter/BgColor = Color(0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_ut15u"]
+offsets = PackedFloat32Array(0.8339286, 0.89107144, 0.94525546, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wpb14"]
+gradient = SubResource("Gradient_ut15u")
+width = 181
+height = 181
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="HealthBar" type="Sprite2D" unique_id=1030741434]
+material = SubResource("ShaderMaterial_twesf")
+texture = SubResource("GradientTexture2D_wpb14")
+script = ExtResource("2_mbgss")
+health = 0.595
+metadata/_custom_type_script = "uid://bh82ie047qrh5"
