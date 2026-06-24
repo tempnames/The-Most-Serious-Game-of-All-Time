@@ -4,17 +4,21 @@
 [ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
 [ext_resource type="Script" uid="uid://drsh3iwpjsd43" path="res://scripts/combat/enemy.gd" id="2_p71o4"]
 [ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="3_4l26h"]
+[ext_resource type="Shader" uid="uid://clgl7ng4q64yt" path="res://shaders/stripes.gdshader" id="3_sa5k0"]
+[ext_resource type="PackedScene" uid="uid://xgeo7p0nge3r" path="res://scenes/ui/btn.tscn" id="4_osi8t"]
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="4_p71o4"]
+[ext_resource type="PackedScene" uid="uid://d35j24cwmdwnx" path="res://scenes/ui/glyph.tscn" id="5_4gnb8"]
+[ext_resource type="Shader" uid="uid://ceea2jyb6g32" path="res://shaders/vignette.gdshader" id="6_vcae8"]
 
-[sub_resource type="Gradient" id="Gradient_qajva"]
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.56078434)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wpb14"]
-gradient = SubResource("Gradient_qajva")
-width = 312
-height = 312
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p71o4"]
+shader = ExtResource("3_sa5k0")
+shader_parameter/color_gap = Color(1, 1, 1, 1)
+shader_parameter/color_stripe = Color(0, 0, 0, 1)
+shader_parameter/divisions = 8.0
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.1
+shader_parameter/angle = 2.785
+shader_parameter/skew = 0.0
 
 [sub_resource type="Resource" id="Resource_hrcy2"]
 script = ExtResource("4_p71o4")
@@ -52,6 +56,12 @@ script = ExtResource("3_4l26h")
 cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_u07v1")])
 metadata/_custom_type_script = "uid://csd6wwmur82ks"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vcae8"]
+shader = ExtResource("6_vcae8")
+shader_parameter/vignette_intensity = 0.7
+shader_parameter/vignette_opacity = 0.30000001425
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
 [node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "arrows_layer")]
 layout_mode = 3
 anchors_preset = 15
@@ -76,14 +86,6 @@ position = Vector2(768, 384)
 script = ExtResource("2_p71o4")
 metadata/_custom_type_script = "uid://drsh3iwpjsd43"
 
-[node name="Vingette" type="CanvasLayer" parent="." unique_id=1039495011]
-follow_viewport_enabled = true
-
-[node name="Vingette" type="Sprite2D" parent="Vingette" unique_id=1058719501]
-position = Vector2(576, 324)
-scale = Vector2(3.6923082, 2.076923)
-texture = SubResource("GradientTexture2D_wpb14")
-
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=576266901]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer" unique_id=287317160]
@@ -95,6 +97,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="LetterboxTop" type="ColorRect" parent="UILayer/VBoxContainer" unique_id=1045761509]
+material = SubResource("ShaderMaterial_p71o4")
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
@@ -125,10 +128,39 @@ size_flags_horizontal = 3
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="TargetBtn" type="Button" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1489803425]
+[node name="TargetBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1545057144 instance=ExtResource("4_osi8t")]
 layout_mode = 2
-size_flags_horizontal = 4
-text = " Confirm "
+offset_transform_enabled = true
+wait_a_frame = true
+affect_offsets_instead = true
+
+[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=1026012456 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "c"
+
+[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=576697647 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "o"
+
+[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=483333377 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "n"
+
+[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=488117170 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "f"
+
+[node name="Glyph5" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=81946764 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "i"
+
+[node name="Glyph6" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=1685953063 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "r"
+
+[node name="Glyph7" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=406712115 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "m"
 
 [node name="MiddleMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=2077610177]
 custom_minimum_size = Vector2(50, 0)
@@ -142,6 +174,9 @@ metadata/_edit_lock_ = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Spin"
+
+[node name="Control" type="Control" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1708724519]
+layout_mode = 2
 
 [node name="EnemySpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=2050001492 instance=ExtResource("1_764e3")]
 layout_mode = 2
@@ -159,9 +194,20 @@ color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
 [node name="LetterboxBottom" type="ColorRect" parent="UILayer/VBoxContainer" unique_id=1527158009]
+material = SubResource("ShaderMaterial_p71o4")
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Vignette" type="ColorRect" parent="UILayer" unique_id=436028355]
+material = SubResource("ShaderMaterial_vcae8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="Arrows" type="CanvasLayer" parent="." unique_id=1101736671]
 

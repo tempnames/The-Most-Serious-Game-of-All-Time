@@ -34,6 +34,10 @@ folder_colors={
 "res://shaders/": "yellow"
 }
 
+[gui]
+
+theme/custom_font="uid://dtyph7h81gk2v"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

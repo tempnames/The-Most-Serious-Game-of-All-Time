@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d35j24cwmdwnx"]
+
+[ext_resource type="Script" uid="uid://cjhwql6qf7x4t" path="res://scripts/ui/glyph.gd" id="1_sfc1b"]
+
+[node name="Glyph" type="RichTextLabel" unique_id=1026012456]
+offset_transform_enabled = true
+theme_override_font_sizes/normal_font_size = 40
+text = "IF THIS TEXT IS DISPLAYED
+MONARCH FUCKED UP"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_sfc1b")
