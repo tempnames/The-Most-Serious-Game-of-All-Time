@@ -4,6 +4,7 @@ extends Control
 @export var enemy_spinners: SpinnerCollection
 @export var target_btn: Button
 @export var spin_btn: Button
+@export var enemy: Enemy
 var origin: Option[TargetTug] = Option.none()
 var arrows: Dictionary[TargetTug, Arrow]
 @export var arrows_layer: CanvasLayer
@@ -80,15 +81,18 @@ func _on_spinner_refresh() -> void {
 		t.stop_arrow.connect(_stop_arrow)
 	})
 	for spinner in enemy_spinners.spinner_nodes {
-		spinner.spinner_lock.and_then(func(lock: TargetLock) {
-			target_locks.push_back(lock)
-			if lock.mouse_exited.is_connected(_exit_lock.bind(lock)) {
-				return
-			}
-			lock.mouse_entered.connect(_enter_lock.bind(lock))
-			lock.mouse_exited.connect(_exit_lock.bind(lock))
-		})
+		spinner.spinner_lock.and_then(_connect_lock)
 	}
+	_connect_lock(enemy.enemy_lock)
+}
+
+func _connect_lock(lock: TargetLock) -> void {
+	target_locks.push_back(lock)
+	if lock.mouse_exited.is_connected(_exit_lock.bind(lock)) {
+		return
+	}
+	lock.mouse_entered.connect(_enter_lock.bind(lock))
+	lock.mouse_exited.connect(_exit_lock.bind(lock))
 }
 
 func _start_arrow(o: TargetTug) -> void {

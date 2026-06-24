@@ -7,11 +7,11 @@ signal switch_to(scene: Master.Scenes)
 
 func _ready() -> void {
 	new_game()
-	encounter_enemy(EnemyData.new())
+	encounter_enemy(preload("uid://okicibqayspw"))
 }
 
 func new_game() -> void {
-	inventory = [SpinnerData.new()]
+	inventory = [preload("uid://mrucmljk4kys")]
 	current_enemy = null
 }
 

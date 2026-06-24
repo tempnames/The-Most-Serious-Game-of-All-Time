@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cb4td5dnasjl8" path="res://scenes/combat/spinner_collection.tscn" id="1_764e3"]
 [ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
+[ext_resource type="Script" uid="uid://drsh3iwpjsd43" path="res://scripts/combat/enemy.gd" id="2_p71o4"]
 [ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="3_4l26h"]
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="4_p71o4"]
 
@@ -14,54 +15,6 @@ width = 312
 height = 312
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Resource" id="Resource_aic3r"]
-script = ExtResource("4_p71o4")
-color = Color(0, 0.8117647, 0, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_4l26h"]
-script = ExtResource("4_p71o4")
-color = Color(0.8666667, 0, 0, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_p71o4"]
-script = ExtResource("4_p71o4")
-color = Color(0, 0, 0.8509804, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_vcae8"]
-script = ExtResource("4_p71o4")
-color = Color(0.9137255, 0, 0.81960785, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_osi8t"]
-script = ExtResource("4_p71o4")
-color = Color(0.79607844, 0.8745098, 0, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_4gnb8"]
-script = ExtResource("4_p71o4")
-color = Color(0, 0.9411765, 0.9019608, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_sa5k0"]
-script = ExtResource("4_p71o4")
-color = Color(0.53333336, 0.26666668, 0.5647059, 1)
-targets = 7
-metadata/_custom_type_script = "uid://dh7lxqk62ctav"
-
-[sub_resource type="Resource" id="Resource_qajva"]
-script = ExtResource("3_4l26h")
-cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_aic3r"), SubResource("Resource_4l26h"), SubResource("Resource_p71o4"), SubResource("Resource_vcae8"), SubResource("Resource_osi8t"), SubResource("Resource_4gnb8"), SubResource("Resource_sa5k0")])
-window = 3
-metadata/_custom_type_script = "uid://csd6wwmur82ks"
 
 [sub_resource type="Resource" id="Resource_hrcy2"]
 script = ExtResource("4_p71o4")
@@ -99,7 +52,7 @@ script = ExtResource("3_4l26h")
 cards = Array[ExtResource("4_p71o4")]([SubResource("Resource_u07v1")])
 metadata/_custom_type_script = "uid://csd6wwmur82ks"
 
-[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "arrows_layer")]
+[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "arrows_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,10 +65,16 @@ player_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/PlayerSpinners")
 enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
 target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn")
 spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn")
+enemy = NodePath("MainLayer/Enemy")
 arrows_layer = NodePath("Arrows")
 
 [node name="MainLayer" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
+
+[node name="Enemy" type="Sprite2D" parent="MainLayer" unique_id=1300519102]
+position = Vector2(768, 384)
+script = ExtResource("2_p71o4")
+metadata/_custom_type_script = "uid://drsh3iwpjsd43"
 
 [node name="Vingette" type="CanvasLayer" parent="." unique_id=1039495011]
 follow_viewport_enabled = true
@@ -158,7 +117,6 @@ size_flags_horizontal = 1
 mouse_filter = 2
 padding = 11.0
 max_wheel_size = 200.0
-spinners = Array[ExtResource("3_4l26h")]([SubResource("Resource_qajva")])
 
 [node name="CenterMargin" type="VBoxContainer" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=488231122]
 custom_minimum_size = Vector2(50, 0)

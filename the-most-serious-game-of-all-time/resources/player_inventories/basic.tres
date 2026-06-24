@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="SpinnerData" format=3 uid="uid://mrucmljk4kys"]
+
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="1_jv4e5"]
+[ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="2_2y2pl"]
+
+[sub_resource type="Resource" id="Resource_aic3r"]
+script = ExtResource("1_jv4e5")
+color = Color(0, 0.8117647, 0, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_4l26h"]
+script = ExtResource("1_jv4e5")
+color = Color(0.8666667, 0, 0, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_p71o4"]
+script = ExtResource("1_jv4e5")
+color = Color(0, 0, 0.8509804, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_vcae8"]
+script = ExtResource("1_jv4e5")
+color = Color(0.9137255, 0, 0.81960785, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_osi8t"]
+script = ExtResource("1_jv4e5")
+color = Color(0.79607844, 0.8745098, 0, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_4gnb8"]
+script = ExtResource("1_jv4e5")
+color = Color(0, 0.9411765, 0.9019608, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[sub_resource type="Resource" id="Resource_sa5k0"]
+script = ExtResource("1_jv4e5")
+color = Color(0.53333336, 0.26666668, 0.5647059, 1)
+targets = 7
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"
+
+[resource]
+script = ExtResource("2_2y2pl")
+cards = Array[ExtResource("1_jv4e5")]([SubResource("Resource_aic3r"), SubResource("Resource_4l26h"), SubResource("Resource_p71o4"), SubResource("Resource_vcae8"), SubResource("Resource_osi8t"), SubResource("Resource_4gnb8"), SubResource("Resource_sa5k0")])
+window = 3
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
