@@ -23,6 +23,9 @@ func _perform_switch(scene: Scenes) -> void {
 	match scene:
 		Scenes.COMBAT:
 			new_scene = preload("uid://cvxp3frvyn2dc")
+		_: 
+			assert(false, "unimplemented!") #explode on invalid invariants
+	
 	if new_scene and new_scene.can_instantiate() {
 		scene_node.add_child(new_scene.instantiate())
 	}

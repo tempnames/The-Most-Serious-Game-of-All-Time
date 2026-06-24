@@ -2,7 +2,7 @@ extends Control
 
 @export var player_spinners: SpinnerCollection
 @export var enemy_spinners: SpinnerCollection
-@export var target_btn: Button
+@export var target_btn: CustomTxt
 @export var spin_btn: Button
 @export var enemy: Enemy
 var origin: Option[TargetTug] = Option.none()
@@ -24,9 +24,9 @@ var spinners_spinning := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void {
-	target_btn.disabled = true
-	target_btn.visible = false
-	target_btn.pressed.connect(_on_target_btn_press)
+	#target_btn.visible = false
+	#target_btn.disabled = true
+	#target_btn.clicked.connect(_on_target_btn_press)
 	spin_btn.pressed.connect(_on_spin_btn_press)
 	
 	player_spinners.spinners = GamestateManager.inventory
