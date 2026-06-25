@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djyvw81tmv7vq"]
 
 [ext_resource type="Shader" uid="uid://crj3nu726xafj" path="res://shaders/health_halo.tres" id="1_h8ekb"]
-[ext_resource type="Script" uid="uid://bh82ie047qrh5" path="res://health_bar.gd" id="2_mbgss"]
+[ext_resource type="Script" uid="uid://bh82ie047qrh5" path="res://scripts/combat/health_bar.gd" id="2_mbgss"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twesf"]
 shader = ExtResource("1_h8ekb")
@@ -25,5 +25,4 @@ fill_to = Vector2(1, 0.5)
 material = SubResource("ShaderMaterial_twesf")
 texture = SubResource("GradientTexture2D_wpb14")
 script = ExtResource("2_mbgss")
-health = 0.595
 metadata/_custom_type_script = "uid://bh82ie047qrh5"

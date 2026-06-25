@@ -5,6 +5,7 @@ extends Control
 @export var target_btn: CustomTxt
 @export var spin_btn: Button
 @export var enemy: Enemy
+@export var player: Player
 var origin: Option[TargetTug] = Option.none()
 var arrows: Dictionary[TargetTug, Arrow]
 @export var arrows_layer: CanvasLayer
@@ -90,6 +91,7 @@ func _on_spinner_refresh() -> void {
 		spinner.spinner_lock.and_then(_connect_lock)
 	}
 	_connect_lock(enemy.enemy_lock)
+	_connect_lock(player.player_lock)
 }
 
 func _connect_lock(lock: TargetLock) -> void {

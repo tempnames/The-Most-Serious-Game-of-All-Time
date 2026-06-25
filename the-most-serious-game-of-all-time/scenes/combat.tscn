@@ -2,11 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cb4td5dnasjl8" path="res://scenes/combat/spinner_collection.tscn" id="1_764e3"]
 [ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
+[ext_resource type="Script" uid="uid://d18xqyhicdler" path="res://scripts/combat/player.gd" id="2_8we11"]
 [ext_resource type="Script" uid="uid://drsh3iwpjsd43" path="res://scripts/combat/enemy.gd" id="2_p71o4"]
 [ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="3_4l26h"]
 [ext_resource type="Shader" uid="uid://clgl7ng4q64yt" path="res://shaders/stripes.gdshader" id="3_sa5k0"]
 [ext_resource type="PackedScene" uid="uid://xgeo7p0nge3r" path="res://scenes/ui/btn.tscn" id="4_osi8t"]
-[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/combat/card.gd" id="4_p71o4"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="4_p71o4"]
 [ext_resource type="PackedScene" uid="uid://d35j24cwmdwnx" path="res://scenes/ui/glyph.tscn" id="5_4gnb8"]
 [ext_resource type="Shader" uid="uid://ceea2jyb6g32" path="res://shaders/vignette.gdshader" id="6_vcae8"]
 
@@ -62,7 +63,7 @@ shader_parameter/vignette_intensity = 0.7
 shader_parameter/vignette_opacity = 0.30000001425
 shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
 
-[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "arrows_layer")]
+[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "player", "arrows_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,13 +77,19 @@ enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
 target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn")
 spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn")
 enemy = NodePath("MainLayer/Enemy")
+player = NodePath("MainLayer/Player")
 arrows_layer = NodePath("Arrows")
 
 [node name="MainLayer" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
 
+[node name="Player" type="Sprite2D" parent="MainLayer" unique_id=2054949373]
+position = Vector2(448, 384)
+script = ExtResource("2_8we11")
+metadata/_custom_type_script = "uid://d18xqyhicdler"
+
 [node name="Enemy" type="Sprite2D" parent="MainLayer" unique_id=1300519102]
-position = Vector2(768, 384)
+position = Vector2(704, 384)
 script = ExtResource("2_p71o4")
 metadata/_custom_type_script = "uid://drsh3iwpjsd43"
 
