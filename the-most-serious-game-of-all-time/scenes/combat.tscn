@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="4_p71o4"]
 [ext_resource type="PackedScene" uid="uid://d35j24cwmdwnx" path="res://scenes/ui/glyph.tscn" id="5_4gnb8"]
 [ext_resource type="Shader" uid="uid://ceea2jyb6g32" path="res://shaders/vignette.gdshader" id="6_vcae8"]
+[ext_resource type="Script" uid="uid://bhtjk1wurx5by" path="res://scripts/combat/effect.gd" id="10_hrcy2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p71o4"]
 shader = ExtResource("3_sa5k0")

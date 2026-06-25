@@ -9,7 +9,7 @@ const sprite_tex: Texture2D = preload("uid://dd51qno3rnrh1")
 signal start_arrow()
 signal stop_arrow()
 signal detach_arrow()
-signal target_registered()
+signal target_registered(potential_combatant: Option[Combatant], potential_spinner: Option[Spinner])
 
 func _enter_tree() -> void {
 	var sprite := Sprite2D.new()
@@ -48,6 +48,10 @@ func try_attach(t: TargetLock) -> bool {
 	return (t.lock_type & valid_targets) > Target.Type.NONE
 }
 
-func register_target(_t: TargetLock) -> void {
-	target_registered.emit()
+func register_target(t: TargetLock) -> void {
+	if t.lock_type == Target.Type.SPINNER {
+		target_registered.emit(Option.none(), Option.some(t.parent_ref))
+	} else {
+		target_registered.emit(Option.some(t.parent_ref), Option.none())
+	}
 }

@@ -35,7 +35,7 @@ func _ready() -> void {
 	
 	player_spinners.spinners = GamestateManager.inventory
 	player_spinners.spinners_updated.connect(_on_spinner_refresh)
-	enemy_spinners.spinners = GamestateManager.current_enemy.spinners
+	enemy_spinners.spinners = GamestateManager.enemy_data.spinners
 	enemy_spinners.spinners_updated.connect(_on_spinner_refresh)
 	_on_spinner_refresh()
 }
@@ -56,6 +56,22 @@ func _process(_delta: float) -> void {
 	} elif state == State.COMBAT {
 		temp_artifical_combat_delay -= _delta
 		if temp_artifical_combat_delay <= 0 {
+			var queue := player_spinners.spinner_nodes + enemy_spinners.spinner_nodes
+			queue.sort_custom(func(a: Spinner, b: Spinner) -> bool {
+				if a.speed > b.speed {
+					return true
+				} elif a.speed == b.speed {
+					# Give the player a slight advantage
+					# in otherwise even matches
+					return not a.enemy
+				} else {
+					return false
+				}
+			})
+			for spinner in queue {
+				spinner.do_effect()
+			}
+			
 			spin_btn.disabled = false
 			spin_btn.visible = true
 			state = State.PRESPIN
@@ -90,8 +106,8 @@ func _on_spinner_refresh() -> void {
 	for spinner in enemy_spinners.spinner_nodes {
 		spinner.spinner_lock.and_then(_connect_lock)
 	}
-	_connect_lock(enemy.enemy_lock)
-	_connect_lock(player.player_lock)
+	_connect_lock(enemy.lock)
+	_connect_lock(player.lock)
 }
 
 func _connect_lock(lock: TargetLock) -> void {
@@ -158,7 +174,7 @@ func _on_target_btn_press() -> void {
 		t.visible = false
 	})
 	state = State.COMBAT
-	temp_artifical_combat_delay = 5.0
+	temp_artifical_combat_delay = 2.0
 }
 
 func _on_spin_btn_press() -> void {

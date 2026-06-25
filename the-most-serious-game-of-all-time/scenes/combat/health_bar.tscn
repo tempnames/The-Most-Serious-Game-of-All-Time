@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://bh82ie047qrh5" path="res://scripts/combat/health_bar.gd" id="2_mbgss"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twesf"]
+resource_local_to_scene = true
 shader = ExtResource("1_h8ekb")
-shader_parameter/HealthPercent = 0.8130000386175
+shader_parameter/HealthPercent = 1.0
 shader_parameter/HealthColor = Color(0.5764706, 0.16862746, 0.49019608, 1)
 shader_parameter/BgColor = Color(0, 0, 0, 0)
 

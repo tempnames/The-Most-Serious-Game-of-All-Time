@@ -13,9 +13,12 @@ func _enter_tree() -> void {
 	add_child(lock)
 	
 	health_bar = preload("uid://djyvw81tmv7vq").instantiate()
+	health_bar.set_health(1.0)
 	add_child(health_bar)
 }
 
-func _ready() -> void {
-	texture = GamestateManager.current_enemy.sprite
-}
+@abstract
+func attack_for(damage: int) -> void
+
+@abstract
+func gain_block(block: int) -> void

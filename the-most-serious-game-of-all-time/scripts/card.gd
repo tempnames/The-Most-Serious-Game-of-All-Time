@@ -5,3 +5,5 @@ extends Resource
 @export var color: Color
 ## Valid targets for the card
 @export var targets: Target.Type
+## Effects the card performs on resolution
+@export var effects: Array[Effect]

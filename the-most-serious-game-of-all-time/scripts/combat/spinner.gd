@@ -30,6 +30,13 @@ var rotation_velocity := 0.0
 var speed := 0
 const SPEED_LABEL_SETTINGS = preload("uid://bajwyx2sc7o2k")
 
+## Pretects from suppress
+var block := 0
+## Reduces next attack by amount
+var suppress := 0
+
+var queued_action: Callable
+
 func _enter_tree() -> void {
 	wheel_bg = Polygon2D.new()
 	wheel_bg.color = Color.BLACK
@@ -62,6 +69,7 @@ func _enter_tree() -> void {
 		var target_lock_shape := CircleShape2D.new()
 		target_lock_shape.radius = size
 		target_lock.collision_shape = target_lock_shape
+		target_lock.parent_ref = self # i'm sorry
 		add_child(target_lock)
 		spinner_lock = Option.some(target_lock)
 		spinner_lock_shape = Option.some(target_lock_shape)
@@ -113,6 +121,9 @@ func spin() -> void {
 		ttug.queue_free()
 	}
 	target_tugs.clear()
+	block = 0
+	suppress = 0
+	queued_action = func() -> void { return }
 	
 	wheel.cascade_in()
 	await wheel.cascade_in_chain_finished
@@ -151,24 +162,65 @@ func _spin_completed() -> void {
 			tug.valid_targets = data.cards[slice_idx].targets
 			target_tugs.push_back(tug)
 			add_child(tug)
-			tug.target_registered.connect(_card_targeted.bind(tug, slice_idx))
+			tug.target_registered.connect(card_targeted.bind(tug, slice_idx))
 		}
 	}
 	
 	spun.emit()
 }
 
+func dmg_block(blk: int) -> void {
+	block += blk
+}
+
+func dmg_suppress(sprs: int) -> void {
+	var blocked_suppress := mini(block, sprs)
+	suppress += sprs - blocked_suppress
+	block -= blocked_suppress
+}
+
 func hide_slices() -> void {
 	wheel.cascade_out()
 }
 
-func _card_targeted(tug: TargetTug, card_idx: int) -> void {
+func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Option[Spinner], tug: TargetTug, card_idx: int) -> void {
 	# Detach any others, only one tug is allowed to be active at once
 	for other_tug in target_tugs {
 		if other_tug == tug:
 			continue
 		other_tug.detach_arrow.emit()
 	}
+	var card := data.cards[card_idx]
+	var relation: Effect.Team
+	if enemy {
+		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player {
+			relation = Effect.Team.FOE
+		} else {
+			relation = Effect.Team.FRIEND
+		}
+	} else {
+		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player {
+			relation = Effect.Team.FRIEND
+		} else {
+			relation = Effect.Team.FOE
+		}
+	}
+	var data := Effect.ExtraData.new()
+	data.blocked = suppress
+	queued_action = func() -> void {
+		for effect in card.effects {
+			effect.resolve_effect(
+				relation,
+				potential_combatant,
+				potential_spinner,
+				data
+			)
+		}
+	}
+}
+
+func do_effect() -> void {
+	queued_action.call()
 }
 
 func set_slice_alpha(a: float) -> void {
