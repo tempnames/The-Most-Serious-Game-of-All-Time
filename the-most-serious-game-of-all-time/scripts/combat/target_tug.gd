@@ -9,7 +9,7 @@ const sprite_tex: Texture2D = preload("uid://dd51qno3rnrh1")
 signal start_arrow()
 signal stop_arrow()
 signal detach_arrow()
-signal target_registered(potential_combatant: Option[Combatant], potential_spinner: Option[Spinner])
+signal target_registered(potential_combatant: Option[Combatant], potential_spinner: Option[Variant])
 
 func _enter_tree() -> void {
 	var sprite := Sprite2D.new()

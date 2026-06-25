@@ -97,6 +97,7 @@ func _process(delta: float) -> void {
 			wheel.rotation += sgn * rotation_velocity * delta * rotation_decay_mult
 			rotation_velocity -= rot_amt * 0.5 * rotation_decay_mult
 			motion_blur.color.a = motion_blur_strength * rotation_velocity/TAU
+			upd_notches()
 		} else {
 			rotation_velocity = 0
 			align_wheel()
@@ -205,15 +206,15 @@ func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Op
 			relation = Effect.Team.FOE
 		}
 	}
-	var data := Effect.ExtraData.new()
-	data.blocked = suppress
+	var effect_data := Effect.ExtraData.new()
+	effect_data.blocked = suppress
 	queued_action = func() -> void {
 		for effect in card.effects {
 			effect.resolve_effect(
 				relation,
 				potential_combatant,
 				potential_spinner,
-				data
+				effect_data
 			)
 		}
 	}
@@ -248,6 +249,7 @@ func resize_wheel() -> void {
 	# For the individual slices
 	var card_amt := data.cards.size()
 	var slice_size := TAU/card_amt
+	var notch_size := 36
 	var idx := 0
 	for tentative_slice in wheel.get_children() {
 		if tentative_slice is not Polygon2D {
@@ -263,12 +265,12 @@ func resize_wheel() -> void {
 		temp_points.append(Vector2.ZERO)
 		# Edge
 		@warning_ignore("integer_division") # Intended
-		var ang_count = maxi(2, 100/card_amt)
+		var ang_count := maxi(2, 100/card_amt)
 		
-		var ang_mult = slice_size/ang_count 
-		var ang_offset = idx * slice_size
+		var ang_mult := slice_size/ang_count 
+		var ang_offset := idx * slice_size
 		for ang_i in range(ang_count) {
-			var ang = ang_mult * ang_i + ang_offset
+			var ang := ang_mult * ang_i + ang_offset
 			temp_points.append(Vector2(
 				cos(ang) * size,
 				sin(ang) * size
@@ -277,6 +279,35 @@ func resize_wheel() -> void {
 		
 		# Now we can finally re-add the array
 		slice.polygon = temp_points
+		
+		idx += 1
+	}
+	upd_notches()
+}
+
+func upd_notches() -> void {
+	var card_amt := data.cards.size()
+	var slice_size := TAU/card_amt
+	var notch_size := 52
+	var idx := 0
+	for tentative_slice in wheel.get_children() {
+		if tentative_slice is not Polygon2D {
+			continue
+		}
+		var slice := tentative_slice as Polygon2D
+		
+		var ang_offset := (idx + 0.5) * slice_size
+		
+		var notch_pos = 32
+		var angle := ang_offset
+		for notch in slice.get_children() {
+			notch.global_position = wheel.global_position + Vector2(
+				cos(angle + wheel.rotation) * (size - notch_pos),
+				sin(angle + wheel.rotation) * (size - notch_pos)
+			)
+			notch.rotation = angle
+			notch_pos += notch_size
+		}
 		
 		idx += 1
 	}
@@ -306,21 +337,44 @@ func refresh_wheel() -> void {
 	}
 	
 	var avg_color := Oklab.new()
-	var col_count := 0
+	var card_amt := data.cards.size()
+	var slice_size := TAU/card_amt
+	var notch_size := 32
+	var i := 0
 	for card in data.cards {
 		var slice := Polygon2D.new()
 		slice.color = card.color
 		wheel.add_child(slice)
+		var angle = (i+0.5) * slice_size
+		for effect in card.effects {
+			var notch: Option[Polygon2D] = Option.none()
+			if effect.effect_type == Effect.Type.ATTACK {
+				var c_notch: AttackNotch = preload("uid://b2kr0g2ap0i4h").instantiate()
+				c_notch.roll_min = effect.roll_min
+				c_notch.roll_max = effect.roll_max
+				notch = Option.some(c_notch)
+			} elif effect.effect_type == Effect.Type.DEFEND {
+				var c_notch: DefenseNotch = preload("uid://bowhqmkisepv5").instantiate()
+				c_notch.roll_min = effect.roll_min
+				c_notch.roll_max = effect.roll_max
+				c_notch.bonus = effect.generic_param_1
+				notch = Option.some(c_notch)
+			}
+			if notch.is_some() {
+				var c_notch := notch.unwrap_unchecked()
+				slice.add_child(c_notch)
+			}
+		}
 		
 		var new_color := Oklab.from_color(card.color)
 		avg_color.L += new_color.L
 		avg_color.a += new_color.a
 		avg_color.b += new_color.b
-		col_count += 1
+		i += 1
 	}
-	avg_color.L /= col_count
-	avg_color.a /= col_count
-	avg_color.b /= col_count
+	avg_color.L /= i
+	avg_color.a /= i
+	avg_color.b /= i
 	
 	motion_blur.color = avg_color.to_color()
 	motion_blur.color.a = 0

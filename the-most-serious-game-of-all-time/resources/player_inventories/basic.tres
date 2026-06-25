@@ -6,7 +6,6 @@
 
 [sub_resource type="Resource" id="Resource_lwvp3"]
 script = ExtResource("2_31lo5")
-multiplier = 1
 metadata/_custom_type_script = "uid://bhtjk1wurx5by"
 
 [sub_resource type="Resource" id="Resource_aic3r"]
@@ -30,7 +29,6 @@ metadata/_custom_type_script = "uid://dh7lxqk62ctav"
 
 [sub_resource type="Resource" id="Resource_q87r4"]
 script = ExtResource("2_31lo5")
-multiplier = 1
 metadata/_custom_type_script = "uid://bhtjk1wurx5by"
 
 [sub_resource type="Resource" id="Resource_vcae8"]

@@ -13,8 +13,6 @@ func _ready() -> void {
 }
 
 func attack_for(damage: int) -> void {
-	print(damage)
-	print(GamestateManager.enemy_instance.health as float / GamestateManager.enemy_data.max_health as float)
 	var applied_block := mini(GamestateManager.enemy_instance.block, damage)
 	GamestateManager.enemy_instance.health -= maxi(0, damage-applied_block)
 	GamestateManager.enemy_instance.block -= applied_block
