@@ -26,6 +26,7 @@ var spinner_lock: Option[TargetLock] = Option.none()
 var spinner_lock_shape: Option[CircleShape2D] = Option.none()
 
 var first_card_idx: int
+var chosen_card_idx: int
 var rotation_velocity := 0.0
 var speed := 0
 const SPEED_LABEL_SETTINGS = preload("uid://bajwyx2sc7o2k")
@@ -130,7 +131,7 @@ func spin() -> void {
 	await wheel.cascade_in_chain_finished
 	
 	var old_card_idx := first_card_idx
-	first_card_idx = randi_range(0, data.cards.size())
+	first_card_idx = randi_range(0, data.cards.size()-1)
 	
 	var card_offset: int
 	if enemy {
@@ -163,7 +164,7 @@ func _spin_completed() -> void {
 			tug.valid_targets = data.cards[slice_idx].targets
 			target_tugs.push_back(tug)
 			add_child(tug)
-			tug.target_registered.connect(card_targeted.bind(tug, slice_idx))
+			tug.target_registered.connect(card_targeted.bind(Option.some(tug), slice_idx))
 		}
 	}
 	
@@ -184,12 +185,15 @@ func hide_slices() -> void {
 	wheel.cascade_out()
 }
 
-func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Option[Spinner], tug: TargetTug, card_idx: int) -> void {
+func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Option[Spinner], tug: Option[TargetTug], card_idx: int) -> void {
 	# Detach any others, only one tug is allowed to be active at once
-	for other_tug in target_tugs {
-		if other_tug == tug:
-			continue
-		other_tug.detach_arrow.emit()
+	if tug.is_some() {
+		var c_tug := tug.unwrap_unchecked()
+		for other_tug in target_tugs {
+			if other_tug == c_tug:
+				continue
+			other_tug.detach_arrow.emit()
+		}
 	}
 	var card := data.cards[card_idx]
 	var relation: Effect.Team
@@ -218,10 +222,26 @@ func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Op
 			)
 		}
 	}
+	chosen_card_idx = card_idx
+}
+
+func roll_effect() -> void {
+	for effect in data.cards[chosen_card_idx].effects {
+		effect.roll()
+		for notch in wheel.get_child(chosen_card_idx).get_children() {
+			notch.show_roll()
+		}
+	}
 }
 
 func do_effect() -> void {
 	queued_action.call()
+	for effect in data.cards[chosen_card_idx].effects {
+		effect.roll()
+		for notch in wheel.get_child(chosen_card_idx).get_children() {
+			notch.hide_roll()
+		}
+	}
 }
 
 func set_slice_alpha(a: float) -> void {
@@ -306,6 +326,9 @@ func upd_notches() -> void {
 				sin(angle + wheel.rotation) * (size - notch_pos)
 			)
 			notch.rotation = angle
+			if enemy {
+				notch.rotation += PI
+			}
 			notch_pos += notch_size
 		}
 		

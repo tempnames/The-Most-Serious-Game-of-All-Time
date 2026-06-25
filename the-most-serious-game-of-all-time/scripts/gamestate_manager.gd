@@ -10,7 +10,7 @@ signal switch_to(scene: Master.Scenes)
 
 func _ready() -> void {
 	new_game()
-	encounter_enemy(preload("uid://okicibqayspw"))
+	encounter_enemy(preload("uid://bin434q1na1eu"))
 }
 
 func new_game() -> void {

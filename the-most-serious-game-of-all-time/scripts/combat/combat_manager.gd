@@ -12,12 +12,9 @@ var arrows: Dictionary[TargetTug, Arrow]
 var target_locks: Array[TargetLock]
 var targets: Array[TargetLock]
 
-var temp_artifical_combat_delay: float
-
 enum State {
 	PRESPIN,
-	TARGET,
-	COMBAT
+	TARGET
 }
 var state: State = State.PRESPIN
 
@@ -51,36 +48,6 @@ func _process(_delta: float) -> void {
 				} else {
 					arrow.target_pos = targets[targets.size()-1].global_position
 				}
-			}
-		}
-	} elif state == State.COMBAT {
-		temp_artifical_combat_delay -= _delta
-		if temp_artifical_combat_delay <= 0 {
-			var queue := player_spinners.spinner_nodes + enemy_spinners.spinner_nodes
-			queue.sort_custom(func(a: Spinner, b: Spinner) -> bool {
-				if a.speed > b.speed {
-					return true
-				} elif a.speed == b.speed {
-					# Give the player a slight advantage
-					# in otherwise even matches
-					return not a.enemy
-				} else {
-					return false
-				}
-			})
-			for spinner in queue {
-				spinner.do_effect()
-			}
-			
-			spin_btn.disabled = false
-			spin_btn.visible = true
-			state = State.PRESPIN
-			for arrow in arrows.keys() {
-				_detach_arrow(arrow)
-				arrow.visible = false
-			}
-			for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
-				spinner.hide_slices()
 			}
 		}
 	}
@@ -173,8 +140,67 @@ func _on_target_btn_press() -> void {
 	_per_tug(func(t: TargetTug) {
 		t.visible = false
 	})
-	state = State.COMBAT
-	temp_artifical_combat_delay = 2.0
+	
+	enemy.perform_turn(enemy_spinners.spinner_nodes, player)
+	
+	_do_combat()
+}
+
+func _do_combat() -> void {
+	var queue := player_spinners.spinner_nodes + enemy_spinners.spinner_nodes
+	queue.sort_custom(func(a: Spinner, b: Spinner) -> bool {
+		if a.speed > b.speed {
+			return true
+		} elif a.speed == b.speed {
+			# Give the player a slight advantage
+			# in otherwise even matches
+			return not a.enemy
+		} else {
+			return false
+		}
+	})
+	for spinner in queue {
+		var card_slice := (spinner.wheel.get_child(spinner.chosen_card_idx) as Polygon2D)
+		var tween := create_tween().set_trans(Tween.TRANS_EXPO)
+		tween.tween_property(card_slice, "scale", card_slice.scale * 1.1, 0.3)
+		spinner.roll_effect()
+		await tween.finished
+		
+		var node: Combatant
+		var target_pos: Vector2
+		var origin_pos: Vector2
+		if spinner.enemy {
+			node = enemy
+			origin_pos = enemy.global_position
+			target_pos = player.global_position
+		} else {
+			node = player
+			origin_pos = player.global_position
+			target_pos = enemy.global_position
+		}
+		tween = create_tween().set_trans(Tween.TRANS_EXPO)
+		tween.tween_property(node, "global_position", target_pos, 0.4)
+		await tween.finished
+		
+		spinner.do_effect()
+		tween = create_tween().set_trans(Tween.TRANS_BACK)
+		tween.tween_property(node, "global_position", origin_pos, 0.5)
+		tween.tween_property(card_slice, "scale", card_slice.scale/1.1, 0.3)
+		await tween.finished
+		
+		await get_tree().create_timer(0.2).timeout
+	}
+	
+	spin_btn.disabled = false
+	spin_btn.visible = true
+	state = State.PRESPIN
+	for arrow in arrows.keys() {
+		_detach_arrow(arrow)
+		arrow.visible = false
+	}
+	for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
+		spinner.hide_slices()
+	}
 }
 
 func _on_spin_btn_press() -> void {
