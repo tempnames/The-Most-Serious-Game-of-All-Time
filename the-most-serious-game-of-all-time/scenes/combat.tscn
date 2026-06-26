@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://xgeo7p0nge3r" path="res://scenes/ui/btn.tscn" id="4_osi8t"]
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="4_p71o4"]
 [ext_resource type="PackedScene" uid="uid://d35j24cwmdwnx" path="res://scenes/ui/glyph.tscn" id="5_4gnb8"]
+[ext_resource type="Texture2D" uid="uid://d8mokastiyb7" path="res://assets/sprites/Tartarus.png" id="5_hmy61"]
 [ext_resource type="Shader" uid="uid://ceea2jyb6g32" path="res://shaders/vignette.gdshader" id="6_vcae8"]
 [ext_resource type="Script" uid="uid://bhtjk1wurx5by" path="res://scripts/combat/effect.gd" id="10_hrcy2"]
 
@@ -76,8 +77,8 @@ mouse_filter = 2
 script = ExtResource("1_qajva")
 player_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/PlayerSpinners")
 enemy_spinners = NodePath("UILayer/VBoxContainer/HBoxContainer/EnemySpinners")
-target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn")
-spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn")
+target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn")
+spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/SpinBtn")
 enemy = NodePath("MainLayer/Enemy")
 player = NodePath("MainLayer/Player")
 letterbox_top = NodePath("UILayer/VBoxContainer/LetterboxTop")
@@ -87,6 +88,11 @@ arrows_layer = NodePath("Arrows")
 [node name="MainLayer" type="CanvasLayer" parent="." unique_id=1236923710]
 follow_viewport_enabled = true
 
+[node name="BG" type="Sprite2D" parent="MainLayer" unique_id=2035925828]
+position = Vector2(576, 256)
+scale = Vector2(3, 3)
+texture = ExtResource("5_hmy61")
+
 [node name="Player" type="Sprite2D" parent="MainLayer" unique_id=2054949373]
 position = Vector2(448, 384)
 texture = ExtResource("2_gvie1")
@@ -94,7 +100,7 @@ script = ExtResource("2_8we11")
 metadata/_custom_type_script = "uid://d18xqyhicdler"
 
 [node name="Enemy" type="Sprite2D" parent="MainLayer" unique_id=1300519102]
-position = Vector2(704, 256)
+position = Vector2(704, 320)
 script = ExtResource("2_p71o4")
 metadata/_custom_type_script = "uid://drsh3iwpjsd43"
 
@@ -140,42 +146,6 @@ size_flags_horizontal = 3
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="TargetBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1545057144 instance=ExtResource("4_osi8t")]
-layout_mode = 2
-size_flags_horizontal = 4
-offset_transform_enabled = true
-start_on_ready = false
-wait_a_frame = true
-affect_offsets_instead = true
-
-[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=1026012456 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "C"
-
-[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=576697647 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "o"
-
-[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=483333377 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "n"
-
-[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=488117170 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "f"
-
-[node name="Glyph5" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=81946764 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "i"
-
-[node name="Glyph6" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=1685953063 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "r"
-
-[node name="Glyph7" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=406712115 instance=ExtResource("5_4gnb8")]
-layout_mode = 2
-text = "m"
-
 [node name="MiddleMargin" type="ColorRect" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=2077610177]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -184,26 +154,85 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
-[node name="SpinBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=618820006 instance=ExtResource("4_osi8t")]
+[node name="Btns" type="Control" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=150818425]
 layout_mode = 2
+
+[node name="TargetBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns" unique_id=1545057144 instance=ExtResource("4_osi8t")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.5
+offset_top = -46.0
+offset_right = 76.5
+offset_bottom = 0.0
+grow_vertical = 0
+size_flags_horizontal = 4
+offset_transform_enabled = true
+start_on_ready = false
+wait_a_frame = true
+affect_offsets_instead = true
+
+[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=1026012456 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "C"
+
+[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=576697647 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "o"
+
+[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=483333377 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "n"
+
+[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=488117170 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "f"
+
+[node name="Glyph5" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=81946764 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "i"
+
+[node name="Glyph6" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=1685953063 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "r"
+
+[node name="Glyph7" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/TargetBtn" unique_id=406712115 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "m"
+
+[node name="SpinBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns" unique_id=618820006 instance=ExtResource("4_osi8t")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.5
+offset_top = -46.0
+offset_right = 40.5
+offset_bottom = 0.0
+grow_vertical = 0
 size_flags_horizontal = 4
 offset_transform_enabled = true
 wait_a_frame = true
 affect_offsets_instead = true
 
-[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=870778587 instance=ExtResource("5_4gnb8")]
+[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/SpinBtn" unique_id=870778587 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
 text = "S"
 
-[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=1315325117 instance=ExtResource("5_4gnb8")]
+[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/SpinBtn" unique_id=1315325117 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
 text = "p"
 
-[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=803102151 instance=ExtResource("5_4gnb8")]
+[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/SpinBtn" unique_id=803102151 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
 text = "i"
 
-[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=1337411425 instance=ExtResource("5_4gnb8")]
+[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/Btns/SpinBtn" unique_id=1337411425 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
 text = "n"
 
