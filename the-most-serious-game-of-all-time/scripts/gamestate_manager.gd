@@ -5,6 +5,15 @@ extends Node
 @export var inventory: Array[SpinnerData]
 @export var health: int
 @export var max_health: int
+@export var atk_mult: float
+@export var blk_mult: float
+@export var flags: Dictionary[Flag, bool]
+
+enum Flag {
+	SONGPHEUS,
+	EURYCARDICE,
+	TOGETHER_AGAIN
+}
 
 signal switch_to(scene: Master.Scenes)
 
@@ -15,8 +24,10 @@ func _ready() -> void {
 
 func new_game() -> void {
 	inventory = [preload("uid://mrucmljk4kys")]
-	max_health = 10
+	max_health = 50
 	health = max_health
+	atk_mult = 1.0
+	blk_mult = 1.0
 }
 
 func encounter_enemy(enemy: EnemyData) -> void {
