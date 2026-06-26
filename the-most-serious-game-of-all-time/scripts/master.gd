@@ -2,7 +2,9 @@ class_name Master
 extends Control
 
 enum Scenes {
-	COMBAT
+	COMBAT,
+	EVENT,
+	GAMEOVER
 }
 
 var scene_node: Node
@@ -12,7 +14,6 @@ func _enter_tree() -> void {
 	add_child(scene_node)
 	
 	GamestateManager.switch_to.connect(_perform_switch)
-	print(GamestateManager.switch_to.is_connected(_perform_switch))
 }
 
 func _perform_switch(scene: Scenes) -> void {
@@ -23,6 +24,8 @@ func _perform_switch(scene: Scenes) -> void {
 	match scene:
 		Scenes.COMBAT:
 			new_scene = preload("uid://cvxp3frvyn2dc")
+		Scenes.EVENT:
+			new_scene = preload("uid://bu7obgx0nva42")
 		_: 
 			assert(false, "unimplemented!") #explode on invalid invariants
 	
