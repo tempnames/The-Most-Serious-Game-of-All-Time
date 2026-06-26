@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://thtg33rjpmyv"]
+
+[ext_resource type="Script" uid="uid://bhtjk1wurx5by" path="res://scripts/combat/effect.gd" id="1_v2f7o"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="2_dx052"]
+
+[sub_resource type="Resource" id="Resource_oj46a"]
+script = ExtResource("1_v2f7o")
+roll_max = 4
+metadata/_custom_type_script = "uid://bhtjk1wurx5by"
+
+[resource]
+script = ExtResource("2_dx052")
+color = Color(0.5073255, 0.3565457, 0.33874577, 1)
+targets = 2
+effects = Array[ExtResource("1_v2f7o")]([SubResource("Resource_oj46a")])
+metadata/_custom_type_script = "uid://dh7lxqk62ctav"

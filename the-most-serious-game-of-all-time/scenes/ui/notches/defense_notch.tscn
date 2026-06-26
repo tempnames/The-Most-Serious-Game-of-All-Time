@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bowhqmkisepv5"]
+
+[ext_resource type="Script" uid="uid://lv4rxr1ruhg0" path="res://scripts/ui/notches/defense_notch.gd" id="1_xgi3y"]
+[ext_resource type="Texture2D" uid="uid://dfc3505b624wi" path="res://assets/sprites/ui/notches/defend.png" id="2_vlq5f"]
+[ext_resource type="FontFile" uid="uid://dtyph7h81gk2v" path="res://assets/fonts/MedievalSharp-Regular.ttf" id="3_ndcs3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o6rb5"]
+font = ExtResource("3_ndcs3")
+font_size = 14
+font_color = Color(0.63181937, 0.7269129, 0.87305415, 1)
+shadow_color = Color(0.4393822, 0.50497425, 0.6668728, 1)
+shadow_offset = Vector2(0.2, 0.2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vlq5f"]
+font = ExtResource("3_ndcs3")
+font_size = 18
+font_color = Color(0.63181937, 0.7269129, 0.87305415, 1)
+shadow_color = Color(0.4393822, 0.50497425, 0.6668728, 1)
+shadow_offset = Vector2(0.2, 0.2)
+
+[node name="DefenseNotch" type="Polygon2D" unique_id=2132689570]
+color = Color(0.09126509, 0.11662481, 0.26472396, 1)
+polygon = PackedVector2Array(-16, -24, 8, -24, 24, -16, 24, 8, 16, 24, -8, 24, -24, 16, -24, -8)
+script = ExtResource("1_xgi3y")
+
+[node name="Defend" type="Sprite2D" parent="." unique_id=950664105]
+position = Vector2(-9, -9)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_vlq5f")
+
+[node name="Values" type="Label" parent="." unique_id=1711713401]
+offset_left = -12.0
+offset_top = 2.0
+offset_right = 12.0
+offset_bottom = 19.0
+text = "1~8"
+label_settings = SubResource("LabelSettings_o6rb5")
+horizontal_alignment = 1
+
+[node name="Bonus" type="Label" parent="." unique_id=206450722]
+offset_left = 2.0
+offset_top = -17.0
+offset_right = 19.0
+text = "+2"
+label_settings = SubResource("LabelSettings_o6rb5")
+horizontal_alignment = 2
+
+[node name="Rolled" type="Label" parent="." unique_id=819678678]
+visible = false
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 22.0
+offset_bottom = 17.0
+text = "3"
+label_settings = SubResource("LabelSettings_vlq5f")
+horizontal_alignment = 1

@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="1_2y2pl"]
 [ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="2_2y2pl"]
 [ext_resource type="Resource" uid="uid://thtg33rjpmyv" path="res://resources/cards/basic_attack.tres" id="2_5fjq0"]
+[ext_resource type="Resource" uid="uid://clvm7rkk570lq" path="res://resources/cards/basic_block.tres" id="2_nbrhb"]
 [ext_resource type="Resource" uid="uid://dqwjt81xxbn58" path="res://resources/cards/strong_attack.tres" id="3_542b8"]
 [ext_resource type="Resource" uid="uid://cagekksltlqld" path="res://resources/cards/consistent_attack.tres" id="4_nbrhb"]
+[ext_resource type="Resource" uid="uid://c6124accy1y8d" path="res://resources/cards/versatile_attackblock.tres" id="5_25wgn"]
 [ext_resource type="Resource" uid="uid://c2wqlf5f046tu" path="res://resources/cards/medium_attack.tres" id="5_mxmjr"]
 
 [resource]
 script = ExtResource("2_2y2pl")
-cards = Array[ExtResource("1_2y2pl")]([ExtResource("2_5fjq0"), ExtResource("3_542b8"), ExtResource("4_nbrhb"), ExtResource("2_5fjq0"), ExtResource("2_5fjq0"), ExtResource("5_mxmjr"), ExtResource("2_5fjq0")])
-window = 3
+cards = Array[ExtResource("1_2y2pl")]([ExtResource("2_nbrhb"), ExtResource("3_542b8"), ExtResource("4_nbrhb"), ExtResource("5_25wgn"), ExtResource("2_5fjq0"), ExtResource("5_mxmjr"), ExtResource("2_nbrhb")])
+window = 2
 metadata/_custom_type_script = "uid://csd6wwmur82ks"

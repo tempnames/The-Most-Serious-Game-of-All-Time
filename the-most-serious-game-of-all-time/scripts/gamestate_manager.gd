@@ -24,3 +24,9 @@ func encounter_enemy(enemy: EnemyData) -> void {
 	enemy_instance = EnemyInstance.new()
 	switch_to.emit(Master.Scenes.COMBAT)
 }
+
+func check_combat_result() -> void {
+	if health <= 0 {
+		switch_to.emit()
+	}
+}

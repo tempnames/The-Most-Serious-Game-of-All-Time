@@ -1,0 +1,26 @@
+class_name DefenseNotch
+extends Polygon2D
+
+@export var roll_min: int = 1
+@export var roll_max: int = 8
+@export var bonus: int = 2
+@export var cur_roll: int
+
+func _ready() -> void {
+	hide_roll()
+}
+
+func show_roll() {
+	$Rolled.text = str(cur_roll)
+	$Values.visible = false
+	$Bonus.visible = false
+	$Rolled.visible = true
+}
+
+func hide_roll() {
+	$Values.text = str(roll_min) + '~' + str(roll_max)
+	$Bonus.text = '+' + str(bonus)
+	$Rolled.visible = false
+	$Values.visible = true
+	$Bonus.visible = true
+}

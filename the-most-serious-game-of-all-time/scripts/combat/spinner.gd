@@ -26,7 +26,7 @@ var spinner_lock: Option[TargetLock] = Option.none()
 var spinner_lock_shape: Option[CircleShape2D] = Option.none()
 
 var first_card_idx: int
-var chosen_card_idx: int
+var chosen_card_idx: Option[int]
 var rotation_velocity := 0.0
 var speed := 0
 const SPEED_LABEL_SETTINGS = preload("uid://bajwyx2sc7o2k")
@@ -126,6 +126,7 @@ func spin() -> void {
 	block = 0
 	suppress = 0
 	queued_action = func() -> void { return }
+	chosen_card_idx = Option.none()
 	
 	wheel.cascade_in()
 	await wheel.cascade_in_chain_finished
@@ -222,25 +223,28 @@ func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Op
 			)
 		}
 	}
-	chosen_card_idx = card_idx
+	chosen_card_idx = Option.some(card_idx)
 }
 
 func roll_effect() -> void {
-	for effect in data.cards[chosen_card_idx].effects {
+	if chosen_card_idx.is_none() { return }
+	var c_card_idx = chosen_card_idx.unwrap_unchecked()
+	var i := 0
+	for effect in data.cards[c_card_idx].effects {
 		effect.roll()
-		for notch in wheel.get_child(chosen_card_idx).get_children() {
-			notch.show_roll()
-		}
+		var notch := wheel.get_child(c_card_idx).get_child(i)
+		notch.cur_roll = effect.cur_roll
+		notch.show_roll()
+		i += 1
 	}
 }
 
 func do_effect() -> void {
+	if chosen_card_idx.is_none() { return }
+	var c_card_idx = chosen_card_idx.unwrap_unchecked()
 	queued_action.call()
-	for effect in data.cards[chosen_card_idx].effects {
-		effect.roll()
-		for notch in wheel.get_child(chosen_card_idx).get_children() {
-			notch.hide_roll()
-		}
+	for notch in wheel.get_child(c_card_idx).get_children() {
+		notch.hide_roll()
 	}
 }
 

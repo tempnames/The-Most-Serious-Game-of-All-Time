@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b2kr0g2ap0i4h"]
+
+[ext_resource type="Texture2D" uid="uid://cvn253s28cp73" path="res://assets/sprites/ui/notches/attack.png" id="1_5v32h"]
+[ext_resource type="Script" uid="uid://b04shrjbtchmu" path="res://scripts/ui/notches/attack_notch.gd" id="1_agmhl"]
+[ext_resource type="FontFile" uid="uid://dtyph7h81gk2v" path="res://assets/fonts/MedievalSharp-Regular.ttf" id="3_agmhl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o6rb5"]
+font = ExtResource("3_agmhl")
+font_size = 13
+font_color = Color(0.85882354, 0.6627451, 0.6745098, 1)
+shadow_color = Color(0.6901961, 0.42745098, 0.39215687, 1)
+shadow_offset = Vector2(0.2, 0.2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7x4br"]
+font = ExtResource("3_agmhl")
+font_size = 18
+font_color = Color(0.85882354, 0.6627451, 0.6745098, 1)
+shadow_color = Color(0.6901961, 0.42745098, 0.39215687, 1)
+shadow_offset = Vector2(0.2, 0.2)
+
+[node name="AttackNotch" type="Polygon2D" unique_id=2132689570]
+color = Color(0.24047822, 0.070400916, 0.036905386, 1)
+polygon = PackedVector2Array(-16, -24, 8, -24, 24, -16, 24, 8, 16, 24, -8, 24, -24, 16, -24, -8)
+script = ExtResource("1_agmhl")
+
+[node name="Attack" type="Sprite2D" parent="." unique_id=950664105]
+position = Vector2(-9.000001, -8)
+rotation = -0.13952413
+scale = Vector2(0.64205575, 0.64205575)
+texture = ExtResource("1_5v32h")
+
+[node name="Values" type="Label" parent="." unique_id=1711713401]
+offset_left = -5.0
+offset_right = 19.0
+offset_bottom = 16.0
+rotation = -0.062769584
+text = "1~8"
+label_settings = SubResource("LabelSettings_o6rb5")
+horizontal_alignment = 2
+
+[node name="Rolled" type="Label" parent="." unique_id=1748139033]
+visible = false
+offset_left = -6.0000005
+offset_top = -1.0
+offset_right = 18.0
+offset_bottom = 20.0
+rotation = -0.062769584
+text = "3"
+label_settings = SubResource("LabelSettings_7x4br")
+horizontal_alignment = 1

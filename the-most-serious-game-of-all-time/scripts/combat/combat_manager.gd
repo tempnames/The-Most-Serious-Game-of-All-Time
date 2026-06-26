@@ -125,8 +125,13 @@ func _detach_arrow(o: TargetTug) {
 }
 
 func _enter_lock(lock: TargetLock) -> void {
-	_exit_lock(lock)
-	targets.push_back(lock)
+	if origin.is_some() {
+		var c_origin := origin.unwrap_unchecked()
+		if c_origin.try_attach(lock) {
+			_exit_lock(lock)
+			targets.push_back(lock)
+		}
+	}
 }
 
 func _exit_lock(lock: TargetLock) -> void {
@@ -160,7 +165,10 @@ func _do_combat() -> void {
 		}
 	})
 	for spinner in queue {
-		var card_slice := (spinner.wheel.get_child(spinner.chosen_card_idx) as Polygon2D)
+		if spinner.chosen_card_idx.is_none() { continue }
+		var c_card_idx = spinner.chosen_card_idx.unwrap_unchecked()
+		
+		var card_slice := (spinner.wheel.get_child(c_card_idx) as Polygon2D)
 		var tween := create_tween().set_trans(Tween.TRANS_EXPO)
 		tween.tween_property(card_slice, "scale", card_slice.scale * 1.1, 0.3)
 		spinner.roll_effect()
@@ -172,11 +180,20 @@ func _do_combat() -> void {
 		if spinner.enemy {
 			node = enemy
 			origin_pos = enemy.global_position
-			target_pos = player.global_position
 		} else {
 			node = player
 			origin_pos = player.global_position
-			target_pos = enemy.global_position
+		}
+		if spinner.data.cards[c_card_idx].effects.any(func(e: Effect) -> bool{
+			return e.effect_type == Effect.Type.ATTACK
+		}) {
+			if spinner.enemy {
+				target_pos = player.global_position
+			} else {
+				target_pos = enemy.global_position
+			}
+		} else {
+			target_pos = origin_pos + Vector2(0, -20)
 		}
 		tween = create_tween().set_trans(Tween.TRANS_EXPO)
 		tween.tween_property(node, "global_position", target_pos, 0.4)
@@ -201,6 +218,8 @@ func _do_combat() -> void {
 	for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
 		spinner.hide_slices()
 	}
+	
+	GamestateManager.check_combat_result()
 }
 
 func _on_spin_btn_press() -> void {
