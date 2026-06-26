@@ -27,6 +27,8 @@ func encounter_enemy(enemy: EnemyData) -> void {
 
 func check_combat_result() -> void {
 	if health <= 0 {
-		switch_to.emit()
+		switch_to.emit(Master.Scenes.GAMEOVER)
+	} elif enemy_instance.health <= 0 {
+		switch_to.emit(Master.Scenes.EVENT)
 	}
 }

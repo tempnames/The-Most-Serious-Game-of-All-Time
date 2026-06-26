@@ -6,6 +6,8 @@ extends Control
 @export var spin_btn: Button
 @export var enemy: Enemy
 @export var player: Player
+@export var letterbox_top: ColorRect
+@export var letterbox_bottom: ColorRect
 var origin: Option[TargetTug] = Option.none()
 var arrows: Dictionary[TargetTug, Arrow]
 @export var arrows_layer: CanvasLayer
@@ -205,6 +207,8 @@ func _do_combat() -> void {
 		tween.tween_property(card_slice, "scale", card_slice.scale/1.1, 0.3)
 		await tween.finished
 		
+		GamestateManager.check_combat_result()
+		
 		await get_tree().create_timer(0.2).timeout
 	}
 	
@@ -219,7 +223,10 @@ func _do_combat() -> void {
 		spinner.hide_slices()
 	}
 	
-	GamestateManager.check_combat_result()
+}
+
+func _letterbox_speed_tween(val: float) -> void {
+	
 }
 
 func _on_spin_btn_press() -> void {

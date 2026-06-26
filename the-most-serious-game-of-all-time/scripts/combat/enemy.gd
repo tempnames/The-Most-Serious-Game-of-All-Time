@@ -13,12 +13,15 @@ func _ready() -> void {
 }
 
 func attack_for(damage: int) -> void {
-	print("enemy damage ", damage)
 	var applied_block := mini(GamestateManager.enemy_instance.block, damage)
-	print(applied_block)
 	GamestateManager.enemy_instance.health -= maxi(0, damage-applied_block)
 	GamestateManager.enemy_instance.block -= applied_block
-	health_bar.set_health(GamestateManager.enemy_instance.health as float / GamestateManager.enemy_data.max_health as float)
+	var tween := create_tween().set_trans(Tween.TRANS_EXPO)
+	tween.tween_method(health_bar.set_health,
+		(health_bar.material as ShaderMaterial).get_shader_parameter(&"HealthPercent"),
+		GamestateManager.enemy_instance.health as float / GamestateManager.enemy_data.max_health as float,
+		1
+	)
 }
 
 func gain_block(block: int) -> void {

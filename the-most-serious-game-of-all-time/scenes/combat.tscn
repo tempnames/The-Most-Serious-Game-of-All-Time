@@ -65,7 +65,7 @@ shader_parameter/vignette_intensity = 0.7
 shader_parameter/vignette_opacity = 0.30000001425
 shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
 
-[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "player", "arrows_layer")]
+[node name="Combat" type="Control" unique_id=463682120 node_paths=PackedStringArray("player_spinners", "enemy_spinners", "target_btn", "spin_btn", "enemy", "player", "letterbox_top", "letterbox_bottom", "arrows_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,6 +80,8 @@ target_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBt
 spin_btn = NodePath("UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn")
 enemy = NodePath("MainLayer/Enemy")
 player = NodePath("MainLayer/Player")
+letterbox_top = NodePath("UILayer/VBoxContainer/LetterboxTop")
+letterbox_bottom = NodePath("UILayer/VBoxContainer/LetterboxBottom")
 arrows_layer = NodePath("Arrows")
 
 [node name="MainLayer" type="CanvasLayer" parent="." unique_id=1236923710]

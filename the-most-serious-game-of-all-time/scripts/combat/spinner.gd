@@ -199,21 +199,25 @@ func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Op
 	var card := data.cards[card_idx]
 	var relation: Effect.Team
 	if enemy {
-		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player {
+		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player or (
+		   potential_spinner  .is_some() and not potential_spinner.unwrap_unchecked().enemy
+		) {
 			relation = Effect.Team.FOE
 		} else {
 			relation = Effect.Team.FRIEND
 		}
 	} else {
-		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player {
+		if potential_combatant.is_some() and potential_combatant.unwrap_unchecked() is Player or (
+		   potential_spinner  .is_some() and not potential_spinner.unwrap_unchecked().enemy
+		) {
 			relation = Effect.Team.FRIEND
 		} else {
 			relation = Effect.Team.FOE
 		}
 	}
-	var effect_data := Effect.ExtraData.new()
-	effect_data.blocked = suppress
 	queued_action = func() -> void {
+		var effect_data := Effect.ExtraData.new()
+		effect_data.blocked = suppress
 		for effect in card.effects {
 			effect.resolve_effect(
 				relation,

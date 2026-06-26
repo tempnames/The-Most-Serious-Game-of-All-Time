@@ -10,12 +10,15 @@ func _enter_tree() -> void {
 }
 
 func attack_for(damage: int) -> void {
-	print("player damage ", damage)
 	var applied_block := mini(block, damage)
-	print(applied_block)
 	GamestateManager.health -= maxi(0, damage-applied_block)
 	block -= applied_block
-	health_bar.set_health(GamestateManager.health as float / GamestateManager.max_health as float)
+	var tween := create_tween().set_trans(Tween.TRANS_EXPO)
+	tween.tween_method(health_bar.set_health,
+		(health_bar.material as ShaderMaterial).get_shader_parameter(&"HealthPercent"),
+		GamestateManager.health as float / GamestateManager.max_health as float,
+		1
+	)
 }
 
 func gain_block(b: int) -> void {
