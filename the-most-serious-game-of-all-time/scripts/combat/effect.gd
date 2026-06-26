@@ -19,15 +19,17 @@ enum Type {
 
 class ExtraData {
 	var blocked: int = 0
+	var atk_mult: float = 1.0
+	var blk_mult: float = 1.0
 }
 
 @export var effect_type: Type
 ## General-purpose stats whose meaning depends on the effect type
-@export_category(&"Stats")
+@export_category("Stats")
 @export var roll_min: int = 1
 @export var roll_max: int = 8
 @export var generic_param_1: int = 0
-@export_category(&"Readonly")
+@export_category("Readonly")
 @export var cur_roll: int
 
 # I CRAVE proper sum types
@@ -45,9 +47,7 @@ func resolve_effect(
 			if effect_type == Type.ATTACK {
 				pass
 			} elif effect_type == Type.DEFEND {
-				target.gain_block(
-					cur_roll
-				)
+				target.gain_block(roundi(cur_roll as float * data.blk_mult))
 			}
 		}
 		if spinner_target.is_some() {
@@ -55,18 +55,14 @@ func resolve_effect(
 			if effect_type == Type.ATTACK {
 				pass
 			} elif effect_type == Type.DEFEND {
-				target.dmg_block(
-					cur_roll
-				)
+				pass
 			}
 		}
 	} else {
 		if combatant_target.is_some() {
 			var target := combatant_target.unwrap_unchecked()
 			if effect_type == Type.ATTACK {
-				target.attack_for(
-					cur_roll - data.blocked
-				)
+				target.attack_for(cur_roll - data.blocked)
 			} elif effect_type == Type.DEFEND {
 				pass
 			}
@@ -76,9 +72,7 @@ func resolve_effect(
 			if effect_type == Type.ATTACK {
 				pass
 			} elif effect_type == Type.DEFEND {
-				target.dmg_suppress(
-					cur_roll + generic_param_1
-				)
+				target.dmg_suppress(roundi(cur_roll as float * data.blk_mult) + generic_param_1)
 			}
 		}
 	}

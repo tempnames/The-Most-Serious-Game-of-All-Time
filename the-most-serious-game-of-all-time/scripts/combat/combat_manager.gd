@@ -3,7 +3,7 @@ extends Control
 @export var player_spinners: SpinnerCollection
 @export var enemy_spinners: SpinnerCollection
 @export var target_btn: CustomTxt
-@export var spin_btn: Button
+@export var spin_btn: CustomTxt
 @export var enemy: Enemy
 @export var player: Player
 @export var letterbox_top: ColorRect
@@ -24,11 +24,8 @@ var spinners_spinning := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void {
-	#target_btn.visible = false
-	#target_btn.disabled = true
-	#target_btn.clicked.connect(_on_target_btn_press)
-	# temp line
-	spin_btn.pressed.connect(_on_target_btn_press)
+	target_btn.disabled = true
+	target_btn.pressed.connect(_on_target_btn_press)
 	
 	spin_btn.pressed.connect(_on_spin_btn_press)
 	
@@ -142,11 +139,15 @@ func _exit_lock(lock: TargetLock) -> void {
 
 func _on_target_btn_press() -> void {
 	if state != State.TARGET: return
-	#target_btn.disabled = true
-	#target_btn.visible = false
+	target_btn.disabled = true
+	target_btn.cascade_out()
 	_per_tug(func(t: TargetTug) {
 		t.visible = false
 	})
+	for arrow in arrows.keys() {
+		_detach_arrow(arrow)
+		arrow.visible = false
+	}
 	
 	enemy.perform_turn(enemy_spinners.spinner_nodes, player)
 	
@@ -197,6 +198,7 @@ func _do_combat() -> void {
 		} else {
 			target_pos = origin_pos + Vector2(0, -20)
 		}
+		node.z_index += 1
 		tween = create_tween().set_trans(Tween.TRANS_EXPO)
 		tween.tween_property(node, "global_position", target_pos, 0.4)
 		await tween.finished
@@ -207,32 +209,24 @@ func _do_combat() -> void {
 		tween.tween_property(card_slice, "scale", card_slice.scale/1.1, 0.3)
 		await tween.finished
 		
+		node.z_index -= 1
 		GamestateManager.check_combat_result()
 		
 		await get_tree().create_timer(0.2).timeout
 	}
 	
 	spin_btn.disabled = false
-	spin_btn.visible = true
+	spin_btn.cascade_in()
 	state = State.PRESPIN
-	for arrow in arrows.keys() {
-		_detach_arrow(arrow)
-		arrow.visible = false
-	}
 	for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
 		spinner.hide_slices()
 	}
-	
-}
-
-func _letterbox_speed_tween(val: float) -> void {
-	
 }
 
 func _on_spin_btn_press() -> void {
 	if state != State.PRESPIN: return
-	#spin_btn.disabled = true
-	#spin_btn.visible = false
+	spin_btn.disabled = true
+	spin_btn.cascade_out()
 	for spinner in player_spinners.spinner_nodes + enemy_spinners.spinner_nodes {
 		spinner.spin()
 		spinner.spun.connect(_despin.bind(spinner))
@@ -245,7 +239,7 @@ func _despin(spinner: Spinner) -> void {
 	spinners_spinning -= 1
 	if spinners_spinning == 0 {
 		state = State.TARGET
-		#target_btn.disabled = false
-		target_btn.visible = true
+		target_btn.disabled = false
+		target_btn.cascade_in()
 	}
 }

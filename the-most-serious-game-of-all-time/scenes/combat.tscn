@@ -94,7 +94,7 @@ script = ExtResource("2_8we11")
 metadata/_custom_type_script = "uid://d18xqyhicdler"
 
 [node name="Enemy" type="Sprite2D" parent="MainLayer" unique_id=1300519102]
-position = Vector2(704, 384)
+position = Vector2(704, 256)
 script = ExtResource("2_p71o4")
 metadata/_custom_type_script = "uid://drsh3iwpjsd43"
 
@@ -142,13 +142,15 @@ metadata/_edit_lock_ = true
 
 [node name="TargetBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1545057144 instance=ExtResource("4_osi8t")]
 layout_mode = 2
+size_flags_horizontal = 4
 offset_transform_enabled = true
+start_on_ready = false
 wait_a_frame = true
 affect_offsets_instead = true
 
 [node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=1026012456 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
-text = "c"
+text = "C"
 
 [node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/TargetBtn" unique_id=576697647 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
@@ -182,13 +184,28 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 metadata/_edit_lock_ = true
 
-[node name="SpinBtn" type="Button" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=460480554]
+[node name="SpinBtn" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=618820006 instance=ExtResource("4_osi8t")]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Spin"
+offset_transform_enabled = true
+wait_a_frame = true
+affect_offsets_instead = true
 
-[node name="Control" type="Control" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin" unique_id=1708724519]
+[node name="Glyph" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=870778587 instance=ExtResource("5_4gnb8")]
 layout_mode = 2
+text = "S"
+
+[node name="Glyph2" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=1315325117 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "p"
+
+[node name="Glyph3" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=803102151 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "i"
+
+[node name="Glyph4" parent="UILayer/VBoxContainer/HBoxContainer/CenterMargin/SpinBtn" unique_id=1337411425 instance=ExtResource("5_4gnb8")]
+layout_mode = 2
+text = "n"
 
 [node name="EnemySpinners" parent="UILayer/VBoxContainer/HBoxContainer" unique_id=2050001492 instance=ExtResource("1_764e3")]
 layout_mode = 2

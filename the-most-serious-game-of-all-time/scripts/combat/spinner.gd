@@ -215,9 +215,20 @@ func card_targeted(potential_combatant: Option[Combatant], potential_spinner: Op
 			relation = Effect.Team.FOE
 		}
 	}
-	queued_action = func() -> void {
+	# Not sure about exact capture rules so anything that shouldn't be captured
+	# from the current scope and instead from the caller's scope is explicitly
+	# parameterized
+	# —Hannah
+	queued_action = func(slf: Spinner, gsm: GamestateManager) -> void {
 		var effect_data := Effect.ExtraData.new()
-		effect_data.blocked = suppress
+		effect_data.blocked = slf.suppress
+		if slf.enemy {
+			effect_data.atk_mult = 1.0
+			effect_data.blk_mult = 1.0
+		} else {
+			effect_data.atk_mult = gsm.atk_mult
+			effect_data.blk_mult = gsm.blk_mult
+		}
 		for effect in card.effects {
 			effect.resolve_effect(
 				relation,
@@ -246,7 +257,7 @@ func roll_effect() -> void {
 func do_effect() -> void {
 	if chosen_card_idx.is_none() { return }
 	var c_card_idx = chosen_card_idx.unwrap_unchecked()
-	queued_action.call()
+	queued_action.call(self, GamestateManager)
 	for notch in wheel.get_child(c_card_idx).get_children() {
 		notch.hide_roll()
 	}
