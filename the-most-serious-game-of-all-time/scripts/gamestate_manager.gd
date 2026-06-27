@@ -21,7 +21,7 @@ enum Flag {
 signal switch_to(scene: Master.Scenes)
 
 func _ready() -> void {
-	new_game()
+	switch_to.emit(Master.Scenes.MENU)
 }
 
 func new_game() -> void {
