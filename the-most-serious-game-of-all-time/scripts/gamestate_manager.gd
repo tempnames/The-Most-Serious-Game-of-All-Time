@@ -31,12 +31,15 @@ func new_game() -> void {
 	atk_mult = 1.0
 	blk_mult = 1.0
 	difficulty = 1.0
+	enemies = [
+		preload("uid://bwm61ht8gi117")
+	]
 	encounter_enemy()
 }
 
 func encounter_enemy() -> void {
 	var enemy_idx = clampi(clampi(roundi(difficulty + randf()*3-1.5), 0, enemies.size()-1) + randi_range(-1, 1), 0, enemies.size()-1)
-	enemy_data = preload("uid://bin434q1na1eu")
+	enemy_data = enemies[enemy_idx]
 	enemy_instance = EnemyInstance.new()
 	switch_to.emit(Master.Scenes.COMBAT)
 }

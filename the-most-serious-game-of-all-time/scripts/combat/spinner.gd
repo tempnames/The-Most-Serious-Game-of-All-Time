@@ -84,12 +84,12 @@ func _ready() -> void {
 }
 
 func _process(delta: float) -> void {
-	if abs(rotation_velocity) > 0 {
+	if rotation_velocity > 0 {
 		speed = randi_range(data.speed_min, data.speed_max)
 		speed_label.text = str(speed)
 		
 		var rot_amt := TAU * delta
-		if abs(rotation_velocity) > rot_amt {
+		if rotation_velocity > rot_amt {
 			var sgn := 1.0
 			if enemy {
 				sgn = -1.0
@@ -101,9 +101,11 @@ func _process(delta: float) -> void {
 			upd_notches()
 		} else {
 			rotation_velocity = 0
-			align_wheel()
-			_spin_completed()
 		}
+	}
+	if rotation_velocity <= 0 {
+		align_wheel()
+		_spin_completed()
 	}
 }
 

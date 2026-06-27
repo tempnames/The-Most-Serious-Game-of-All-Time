@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="The Most Serious Game Of All Time"
+config/name="Spinnyphus"
 run/main_scene="uid://d4l2pggbavbjh"
 config/features=PackedStringArray("4.8", "Mobile")
 config/icon="res://icon.svg"
