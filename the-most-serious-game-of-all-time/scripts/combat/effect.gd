@@ -62,7 +62,7 @@ func resolve_effect(
 		if combatant_target.is_some() {
 			var target := combatant_target.unwrap_unchecked()
 			if effect_type == Type.ATTACK {
-				target.attack_for(cur_roll - data.blocked)
+				target.attack_for(roundi(cur_roll as float * data.atk_mult) - data.blocked)
 			} elif effect_type == Type.DEFEND {
 				pass
 			}

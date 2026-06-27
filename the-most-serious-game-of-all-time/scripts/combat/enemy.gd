@@ -42,3 +42,7 @@ func perform_turn(spinners: Array[Spinner], player: Player) {
 		}
 	}
 }
+
+func clear_block() -> void {
+	GamestateManager.enemy_instance.block = 0
+}

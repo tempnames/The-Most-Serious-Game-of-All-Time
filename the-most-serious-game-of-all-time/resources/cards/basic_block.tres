@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_oj46a"]
 script = ExtResource("1_roev4")
 effect_type = 1
-roll_max = 4
+roll_max = 6
 generic_param_1 = 2
 metadata/_custom_type_script = "uid://bhtjk1wurx5by"
 

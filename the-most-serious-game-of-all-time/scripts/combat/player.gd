@@ -9,6 +9,10 @@ func _enter_tree() -> void {
 	lock.parent_ref = self # i'm sorry
 }
 
+func _ready() -> void {
+	attack_for(0)
+}
+
 func attack_for(damage: int) -> void {
 	var applied_block := mini(block, damage)
 	GamestateManager.health -= maxi(0, damage-applied_block)
@@ -19,6 +23,10 @@ func attack_for(damage: int) -> void {
 		GamestateManager.health as float / GamestateManager.max_health as float,
 		1
 	)
+}
+
+func clear_block() -> void {
+	block = 0
 }
 
 func gain_block(b: int) -> void {

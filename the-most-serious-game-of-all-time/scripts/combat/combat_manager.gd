@@ -232,6 +232,8 @@ func _on_spin_btn_press() -> void {
 		spinner.spun.connect(_despin.bind(spinner))
 		spinners_spinning += 1
 	}
+	player.clear_block()
+	enemy.clear_block()
 }
 
 func _despin(spinner: Spinner) -> void {

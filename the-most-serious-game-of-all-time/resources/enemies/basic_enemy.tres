@@ -16,6 +16,6 @@ metadata/_custom_type_script = "uid://csd6wwmur82ks"
 [resource]
 script = ExtResource("1_jqeog")
 spinners = Array[ExtResource("2_sbxgt")]([SubResource("Resource_x62fw")])
-max_health = 10
+max_health = 1
 sprite = ExtResource("6_kxldy")
 metadata/_custom_type_script = "uid://cfivaljxcen8x"
