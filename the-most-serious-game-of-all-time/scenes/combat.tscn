@@ -94,7 +94,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("5_hmy61")
 
 [node name="Player" type="Sprite2D" parent="MainLayer" unique_id=2054949373]
-position = Vector2(448, 384)
+position = Vector2(448, 408)
 texture = ExtResource("3_hmy61")
 script = ExtResource("2_8we11")
 metadata/_custom_type_script = "uid://d18xqyhicdler"

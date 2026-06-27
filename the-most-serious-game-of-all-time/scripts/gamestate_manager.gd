@@ -8,7 +8,7 @@ extends Node
 @export var atk_mult: float
 @export var blk_mult: float
 @export var flags: Dictionary[Flag, bool]
-@export var difficulty := 1.0
+@export var difficulty := 0.0
 @export var enemies: Array[EnemyData]
 @export var previous_event: EventManager.Event
 
@@ -30,15 +30,19 @@ func new_game() -> void {
 	health = max_health
 	atk_mult = 1.0
 	blk_mult = 1.0
-	difficulty = 1.0
+	difficulty = 0.0
 	enemies = [
-		preload("uid://bwm61ht8gi117")
+		preload("uid://pqy80v8ok7hn"),
+		preload("uid://bqi4k4dgtchsm"),
+		preload("uid://bedxen1jdiai5"),
+		preload("uid://bwm61ht8gi117"),
+		preload("uid://cj00jjw82ph3s")
 	]
 	encounter_enemy()
 }
 
 func encounter_enemy() -> void {
-	var enemy_idx = clampi(clampi(roundi(difficulty + randf()*3-1.5), 0, enemies.size()-1) + randi_range(-1, 1), 0, enemies.size()-1)
+	var enemy_idx = clampi(clampi(roundi(difficulty), 0, enemies.size()-1) + randi_range(-1, 1), 0, enemies.size()-1)
 	enemy_data = enemies[enemy_idx]
 	enemy_instance = EnemyInstance.new()
 	switch_to.emit(Master.Scenes.COMBAT)
