@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://cb4td5dnasjl8" path="res://scenes/combat/spinner_collection.tscn" id="1_764e3"]
 [ext_resource type="Script" uid="uid://dep1u5fy3gipg" path="res://scripts/combat/combat_manager.gd" id="1_qajva"]
 [ext_resource type="Script" uid="uid://d18xqyhicdler" path="res://scripts/combat/player.gd" id="2_8we11"]
-[ext_resource type="Texture2D" uid="uid://0q7byai7cdij" path="res://icon.svg" id="2_gvie1"]
 [ext_resource type="Script" uid="uid://drsh3iwpjsd43" path="res://scripts/combat/enemy.gd" id="2_p71o4"]
 [ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="3_4l26h"]
+[ext_resource type="Texture2D" uid="uid://bg8nkdjobjoa3" path="res://assets/sprites/sisyphus.png" id="3_hmy61"]
 [ext_resource type="Shader" uid="uid://clgl7ng4q64yt" path="res://shaders/stripes.gdshader" id="3_sa5k0"]
 [ext_resource type="PackedScene" uid="uid://xgeo7p0nge3r" path="res://scenes/ui/btn.tscn" id="4_osi8t"]
 [ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="4_p71o4"]
@@ -95,7 +95,7 @@ texture = ExtResource("5_hmy61")
 
 [node name="Player" type="Sprite2D" parent="MainLayer" unique_id=2054949373]
 position = Vector2(448, 384)
-texture = ExtResource("2_gvie1")
+texture = ExtResource("3_hmy61")
 script = ExtResource("2_8we11")
 metadata/_custom_type_script = "uid://d18xqyhicdler"
 
