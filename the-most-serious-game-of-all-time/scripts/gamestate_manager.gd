@@ -10,7 +10,7 @@ extends Node
 @export var flags: Dictionary[Flag, bool]
 @export var difficulty := 0.0
 @export var enemies: Array[EnemyData]
-@export var previous_event: EventManager.Event
+@export var previous_event: EventManager.Event = EventManager.Event.FOOTPRINT
 
 enum Flag {
 	SONGPHEUS,
@@ -46,6 +46,7 @@ func encounter_enemy() -> void {
 	enemy_data = enemies[enemy_idx]
 	enemy_instance = EnemyInstance.new()
 	switch_to.emit(Master.Scenes.COMBAT)
+	difficulty += 0.3
 }
 
 func check_combat_result() -> void {

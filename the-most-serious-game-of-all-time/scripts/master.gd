@@ -1,6 +1,8 @@
 class_name Master
 extends Control
 
+@export var music: AudioStreamPlayer2D
+
 enum Scenes {
 	MENU,
 	TUTORIAL,
@@ -11,12 +13,50 @@ enum Scenes {
 }
 
 var scene_node: Node
+var prev_scene: Scenes
 
 func _enter_tree() -> void {
 	scene_node = Node.new()
 	add_child(scene_node)
 	
 	GamestateManager.switch_to.connect(_perform_switch)
+}
+
+func _ready() -> void {
+	start_bg()
+	prev_scene = Scenes.MENU
+}
+
+func reset_music_signals() -> void {
+	if music.finished.is_connected(loop_finished):
+		music.finished.disconnect(loop_finished)
+	if music.finished.is_connected(intro_finished):
+		music.finished.disconnect(intro_finished)
+}
+
+func start_bg() -> void {
+	reset_music_signals()
+	music.stream = preload("uid://d3hwfqytlro7g")
+	music.play()
+	music.finished.connect(loop_finished)
+}
+
+func start_combat() -> void {
+	reset_music_signals()
+	music.stream = preload("uid://b2dxtgyylhw7d")
+	music.play()
+	music.finished.connect(intro_finished)
+}
+
+func intro_finished() -> void {
+	reset_music_signals()
+	music.stream = preload("uid://cf22u8foqupff")
+	music.play()
+	music.finished.connect(loop_finished)
+}
+
+func loop_finished() -> void {
+	music.play()
 }
 
 func _perform_switch(scene: Scenes) -> void {
@@ -38,7 +78,15 @@ func _perform_switch(scene: Scenes) -> void {
 		Scenes.GAMEOVER:
 			new_scene = preload("uid://dvin0tx17ty43")
 	
+	if scene == Scenes.COMBAT {
+		start_combat()
+	} elif prev_scene == Scenes.COMBAT {
+		start_bg()
+	}
+	
 	if new_scene and new_scene.can_instantiate() {
 		scene_node.add_child(new_scene.instantiate())
 	}
+	
+	prev_scene = scene
 }
