@@ -13,7 +13,7 @@ config_version=5
 config/name="Spinnyphus"
 run/main_scene="uid://d4l2pggbavbjh"
 config/features=PackedStringArray("4.8", "Mobile")
-config/icon="res://icon.svg"
+config/icon="uid://csa0n86g7jioa"
 
 [autoload]
 

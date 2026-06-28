@@ -26,7 +26,7 @@ func _ready() -> void {
 
 func new_game() -> void {
 	inventory = [preload("uid://mrucmljk4kys")]
-	max_health = 50
+	max_health = 100
 	health = max_health
 	atk_mult = 1.0
 	blk_mult = 1.0
