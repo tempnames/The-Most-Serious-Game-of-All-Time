@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bl3bnjd8lkwwp"
+path="res://.godot/imported/The Lyreman_Intro.ogg-bef5d1c143000f5ebb503c753bd4ffa6.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Lyreman_Intro.ogg"
+dest_files=["res://.godot/imported/The Lyreman_Intro.ogg-bef5d1c143000f5ebb503c753bd4ffa6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

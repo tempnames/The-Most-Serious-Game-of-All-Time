@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://diy6vvi4p328n"
+path="res://.godot/imported/The Starving Man_Walk Away.ogg-424368e4f398e0d0239a507e6d5869f7.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Starving Man_Walk Away.ogg"
+dest_files=["res://.godot/imported/The Starving Man_Walk Away.ogg-424368e4f398e0d0239a507e6d5869f7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

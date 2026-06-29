@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://dk76twclqhkm5"]
+
+[ext_resource type="Texture2D" uid="uid://csa0n86g7jioa" path="res://assets/sprites/Mainmenu.png" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://bq7musb51daap" path="res://assets/sprites/spinner.png" id="2_vjb58"]
+
+[sub_resource type="GDScript" id="GDScript_wpb14"]
+script/source = "extends Button
+
+
+func _pressed() -> void {
+	GamestateManager.switch_to.emit(Master.Scenes.TUTORIAL)
+}
+"
+
+[sub_resource type="GDScript" id="GDScript_vjb58"]
+script/source = "extends Button
+
+func _pressed() -> void {
+	GamestateManager.switch_to.emit(Master.Scenes.CREDITS)
+}
+"
+
+[sub_resource type="GDScript" id="GDScript_xkyey"]
+script/source = "extends Button
+
+func _pressed() -> void {
+	get_tree().quit()
+}
+"
+
+[node name="Menu" type="Control" unique_id=521626982]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(376, 448)
+
+[node name="Mainmenu" type="Sprite2D" parent="." unique_id=1150837192]
+position = Vector2(640, 456)
+scale = Vector2(3, 3)
+texture = ExtResource("1_yqeox")
+
+[node name="Spinner" type="Sprite2D" parent="." unique_id=246370559]
+position = Vector2(376, 424)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_vjb58")
+
+[node name="PlayBtn" type="Button" parent="Spinner" unique_id=1861323421]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -548.0
+offset_right = -234.0
+offset_bottom = -467.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 64
+text = "Play
+"
+flat = true
+script = SubResource("GDScript_wpb14")
+
+[node name="CreditsBtn" type="Button" parent="Spinner" unique_id=2009114700]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -404.0
+offset_right = 163.0
+offset_bottom = -323.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 64
+text = "Credits"
+flat = true
+script = SubResource("GDScript_vjb58")
+
+[node name="Quit" type="Button" parent="Spinner" unique_id=259566389]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -52.0
+offset_right = 27.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 64
+text = "Quit"
+flat = true
+script = SubResource("GDScript_xkyey")
+
+[node name="Settings" type="Button" parent="Spinner" unique_id=1249015087]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -548.0
+offset_top = -196.0
+offset_right = -324.98447
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 4.712389
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "this button does nothing but it would be cool if there were settings here i think
+"
+flat = true
+autowrap_mode = 3

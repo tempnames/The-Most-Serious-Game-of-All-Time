@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cj00jjw82ph3s"]
+
+[ext_resource type="Script" uid="uid://cfivaljxcen8x" path="res://scripts/combat/enemy_data.gd" id="1_22r3l"]
+[ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="2_miqbw"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="3_i7i06"]
+[ext_resource type="Resource" uid="uid://clvm7rkk570lq" path="res://resources/cards/basic_block.tres" id="4_tmab1"]
+[ext_resource type="Resource" uid="uid://dqwjt81xxbn58" path="res://resources/cards/strong_attack.tres" id="5_22r3l"]
+[ext_resource type="Resource" uid="uid://4w8psb2wrr06" path="res://resources/cards/hope.tres" id="7_ure0y"]
+[ext_resource type="Resource" uid="uid://c2wqlf5f046tu" path="res://resources/cards/medium_attack.tres" id="8_bw3od"]
+[ext_resource type="Resource" uid="uid://0egxmowvdaj5" path="res://resources/cards/strong_block.tres" id="8_miqbw"]
+[ext_resource type="Texture2D" uid="uid://b0dojltn51wm2" path="res://assets/sprites/enemies/tentacle.png" id="9_22r3l"]
+
+[sub_resource type="Resource" id="Resource_hmy61"]
+script = ExtResource("2_miqbw")
+cards = Array[ExtResource("3_i7i06")]([ExtResource("7_ure0y"), ExtResource("7_ure0y"), ExtResource("7_ure0y"), ExtResource("5_22r3l")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_0qyji"]
+script = ExtResource("2_miqbw")
+cards = Array[ExtResource("3_i7i06")]([ExtResource("4_tmab1"), ExtResource("8_bw3od"), ExtResource("4_tmab1"), ExtResource("8_miqbw"), ExtResource("4_tmab1"), ExtResource("8_bw3od"), ExtResource("4_tmab1"), ExtResource("4_tmab1")])
+speed_min = 4
+speed_max = 8
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_u07v1"]
+script = ExtResource("2_miqbw")
+cards = Array[ExtResource("3_i7i06")]([ExtResource("7_ure0y"), ExtResource("7_ure0y"), ExtResource("7_ure0y"), ExtResource("5_22r3l")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[resource]
+script = ExtResource("1_22r3l")
+spinners = Array[ExtResource("2_miqbw")]([SubResource("Resource_hmy61"), SubResource("Resource_0qyji"), SubResource("Resource_u07v1")])
+max_health = 30
+sprite = ExtResource("9_22r3l")
+metadata/_custom_type_script = "uid://cfivaljxcen8x"

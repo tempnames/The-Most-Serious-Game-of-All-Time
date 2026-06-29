@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamPlaylist" format=3 uid="uid://bppdefy0jerp8"]
+
+[ext_resource type="AudioStream" uid="uid://bl3bnjd8lkwwp" path="res://assets/voicelines/The Lyreman_Intro.ogg" id="1_s1i4b"]
+[ext_resource type="AudioStream" uid="uid://bgrwbean3ux6t" path="res://assets/voicelines/The Lyreman_Intro_Yes.ogg" id="2_6d4e7"]
+
+[resource]
+loop = false
+fade_time = 0.0
+stream_count = 2
+stream_0 = ExtResource("1_s1i4b")
+stream_1 = ExtResource("2_6d4e7")

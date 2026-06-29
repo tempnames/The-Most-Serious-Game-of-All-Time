@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bwm61ht8gi117"]
+
+[ext_resource type="Script" uid="uid://cfivaljxcen8x" path="res://scripts/combat/enemy_data.gd" id="1_6a741"]
+[ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="2_0o5xy"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="3_kdfu4"]
+[ext_resource type="Resource" uid="uid://thtg33rjpmyv" path="res://resources/cards/basic_attack.tres" id="4_crsm5"]
+[ext_resource type="Resource" uid="uid://clvm7rkk570lq" path="res://resources/cards/basic_block.tres" id="4_lak13"]
+[ext_resource type="Resource" uid="uid://c6124accy1y8d" path="res://resources/cards/versatile_attackblock.tres" id="5_haugt"]
+[ext_resource type="Resource" uid="uid://c2wqlf5f046tu" path="res://resources/cards/medium_attack.tres" id="5_lak13"]
+[ext_resource type="Texture2D" uid="uid://cnuvv7q4mu7m0" path="res://assets/sprites/enemies/fish.png" id="6_6a741"]
+[ext_resource type="Resource" uid="uid://4w8psb2wrr06" path="res://resources/cards/hope.tres" id="7_0lbv2"]
+
+[sub_resource type="Resource" id="Resource_nif1y"]
+script = ExtResource("2_0o5xy")
+cards = Array[ExtResource("3_kdfu4")]([ExtResource("4_lak13"), ExtResource("4_lak13"), ExtResource("5_haugt"), ExtResource("4_lak13"), ExtResource("5_haugt")])
+speed_max = 16
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_0o5xy"]
+script = ExtResource("2_0o5xy")
+cards = Array[ExtResource("3_kdfu4")]([ExtResource("4_crsm5"), ExtResource("7_0lbv2"), ExtResource("4_crsm5"), ExtResource("5_lak13")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[resource]
+script = ExtResource("1_6a741")
+spinners = Array[ExtResource("2_0o5xy")]([SubResource("Resource_nif1y"), SubResource("Resource_0o5xy")])
+max_health = 15
+sprite = ExtResource("6_6a741")
+metadata/_custom_type_script = "uid://cfivaljxcen8x"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b50k5f0367cn1"
+path="res://.godot/imported/The Wedded Woman_Walk away.ogg-ace5d0bef68485022d7435879f07f1e9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Wedded Woman_Walk away.ogg"
+dest_files=["res://.godot/imported/The Wedded Woman_Walk away.ogg-ace5d0bef68485022d7435879f07f1e9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

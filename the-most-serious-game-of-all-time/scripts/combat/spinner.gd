@@ -89,7 +89,7 @@ func _process(delta: float) -> void {
 		speed_label.text = str(speed)
 		
 		var rot_amt := TAU * delta
-		if abs(rotation_velocity) > rot_amt {
+		if rotation_velocity > rot_amt {
 			var sgn := 1.0
 			if enemy {
 				sgn = -1.0

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://daq6nrfo46abu"
+path="res://.godot/imported/The Wedded Woman_Intro.ogg-059ee0e5c0a4c18b6cb696e64c49298c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Wedded Woman_Intro.ogg"
+dest_files=["res://.godot/imported/The Wedded Woman_Intro.ogg-059ee0e5c0a4c18b6cb696e64c49298c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

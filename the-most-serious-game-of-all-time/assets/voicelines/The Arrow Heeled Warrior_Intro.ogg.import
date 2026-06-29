@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bjur8t612xklc"
+path="res://.godot/imported/The Arrow Heeled Warrior_Intro.ogg-6f495db6c396653ba657097c3e59966d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Arrow Heeled Warrior_Intro.ogg"
+dest_files=["res://.godot/imported/The Arrow Heeled Warrior_Intro.ogg-6f495db6c396653ba657097c3e59966d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

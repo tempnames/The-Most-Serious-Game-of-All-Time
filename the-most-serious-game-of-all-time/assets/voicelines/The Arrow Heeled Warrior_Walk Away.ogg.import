@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://vts8x5i3a4x5"
+path="res://.godot/imported/The Arrow Heeled Warrior_Walk Away.ogg-ed39f6f570367f4fd2c4b4ee5cc2fac3.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Arrow Heeled Warrior_Walk Away.ogg"
+dest_files=["res://.godot/imported/The Arrow Heeled Warrior_Walk Away.ogg-ed39f6f570367f4fd2c4b4ee5cc2fac3.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://sw12bpx4cfss"
+path="res://.godot/imported/The Boy_Sit with him.ogg-4a78da130889c791364bff1ac698fd87.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Boy_Sit with him.ogg"
+dest_files=["res://.godot/imported/The Boy_Sit with him.ogg-4a78da130889c791364bff1ac698fd87.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://htgvpp0hlq5f"
+path="res://.godot/imported/The Lyreman_Walk away.ogg-ab3c6093c190c1db68890d68487ef1a1.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Lyreman_Walk away.ogg"
+dest_files=["res://.godot/imported/The Lyreman_Walk away.ogg-ab3c6093c190c1db68890d68487ef1a1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

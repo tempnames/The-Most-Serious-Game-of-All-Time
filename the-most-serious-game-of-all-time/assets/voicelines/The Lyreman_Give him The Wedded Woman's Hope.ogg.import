@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dbyucgqcpkoxi"
+path="res://.godot/imported/The Lyreman_Give him The Wedded Woman's Hope.ogg-77c926e8c19287d59cba8873ce636647.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Lyreman_Give him The Wedded Woman's Hope.ogg"
+dest_files=["res://.godot/imported/The Lyreman_Give him The Wedded Woman's Hope.ogg-77c926e8c19287d59cba8873ce636647.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bqi4k4dgtchsm"]
+
+[ext_resource type="Script" uid="uid://cfivaljxcen8x" path="res://scripts/combat/enemy_data.gd" id="1_qe14k"]
+[ext_resource type="Script" uid="uid://csd6wwmur82ks" path="res://scripts/combat/spinner_data.gd" id="2_3yq0e"]
+[ext_resource type="Script" uid="uid://dh7lxqk62ctav" path="res://scripts/card.gd" id="3_3g3lh"]
+[ext_resource type="Resource" uid="uid://thtg33rjpmyv" path="res://resources/cards/basic_attack.tres" id="4_4cglx"]
+[ext_resource type="Resource" uid="uid://clvm7rkk570lq" path="res://resources/cards/basic_block.tres" id="5_3yq0e"]
+[ext_resource type="Resource" uid="uid://c2wqlf5f046tu" path="res://resources/cards/medium_attack.tres" id="5_q7i7k"]
+[ext_resource type="Texture2D" uid="uid://cr7cq3lmthkk7" path="res://assets/sprites/enemies/Shooter.png" id="6_p185c"]
+
+[sub_resource type="Resource" id="Resource_nif1y"]
+script = ExtResource("2_3yq0e")
+cards = Array[ExtResource("3_3g3lh")]([ExtResource("4_4cglx"), ExtResource("5_3yq0e"), ExtResource("4_4cglx"), ExtResource("5_q7i7k")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[sub_resource type="Resource" id="Resource_dq76b"]
+script = ExtResource("2_3yq0e")
+cards = Array[ExtResource("3_3g3lh")]([ExtResource("4_4cglx"), ExtResource("5_3yq0e"), ExtResource("4_4cglx"), ExtResource("5_q7i7k")])
+metadata/_custom_type_script = "uid://csd6wwmur82ks"
+
+[resource]
+script = ExtResource("1_qe14k")
+spinners = Array[ExtResource("2_3yq0e")]([SubResource("Resource_nif1y"), SubResource("Resource_dq76b")])
+max_health = 10
+sprite = ExtResource("6_p185c")
+metadata/_custom_type_script = "uid://cfivaljxcen8x"

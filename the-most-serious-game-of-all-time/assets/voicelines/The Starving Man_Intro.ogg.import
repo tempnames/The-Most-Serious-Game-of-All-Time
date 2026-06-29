@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dnujksio03wj0"
+path="res://.godot/imported/The Starving Man_Intro.ogg-903630b16919cc22670340b292c55e87.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Starving Man_Intro.ogg"
+dest_files=["res://.godot/imported/The Starving Man_Intro.ogg-903630b16919cc22670340b292c55e87.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

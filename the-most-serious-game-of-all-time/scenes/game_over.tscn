@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dvin0tx17ty43"]
+
+[sub_resource type="GDScript" id="GDScript_wpb14"]
+script/source = "extends Button
+
+func _pressed() -> void {
+	GamestateManager.new_game()
+}
+"
+
+[sub_resource type="GDScript" id="GDScript_0nqlu"]
+script/source = "extends Button
+
+func _pressed() -> void {
+	get_tree().quit()
+}
+"
+
+[node name="GameOver" type="CenterContainer" unique_id=341103979]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=592675725]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=732168242]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1398819589]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=199750689]
+layout_mode = 2
+text = "Nothing lasts forever.
+Did you win? Is it a win to get further than before, when no matter
+how far you get, you are still trapped? That's up to you to decide."
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=437338072]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Try again?"
+script = SubResource("GDScript_wpb14")
+
+[node name="Button2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1456752446]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit"
+script = SubResource("GDScript_0nqlu")

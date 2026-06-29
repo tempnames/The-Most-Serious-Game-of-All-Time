@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://x6r0gkg4mwah"
+path="res://.godot/imported/The Boy_Walk away.ogg-13d574a861b45d7020f423f7664015b8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Boy_Walk away.ogg"
+dest_files=["res://.godot/imported/The Boy_Walk away.ogg-13d574a861b45d7020f423f7664015b8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

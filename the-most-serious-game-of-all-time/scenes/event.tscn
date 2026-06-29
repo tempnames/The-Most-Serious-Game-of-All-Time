@@ -1,0 +1,273 @@
+[gd_scene format=3 uid="uid://bu7obgx0nva42"]
+
+[ext_resource type="Theme" uid="uid://cwhnic6ypd0x2" path="res://resources/main_theme.tres" id="1_7bopq"]
+[ext_resource type="Script" uid="uid://ce4vw3rdhnlf6" path="res://scripts/events/event_manager.gd" id="1_jtw3a"]
+[ext_resource type="Texture2D" uid="uid://dmr08pwt0gq6i" path="res://assets/sprites/Styx.png" id="2_f0a7p"]
+[ext_resource type="Script" uid="uid://bgshvuao8jk2q" path="res://scripts/ui/cascadeV3.gd" id="2_jtw3a"]
+[ext_resource type="Shader" uid="uid://ceea2jyb6g32" path="res://shaders/vignette.gdshader" id="3_f0a7p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7x4br"]
+
+[sub_resource type="GDScript" id="GDScript_7bopq"]
+script/source = "extends Label
+
+func _ready() -> void {
+	text = ([
+		\"Another foe, vanquished...\",
+		\"Can you hear their souls, calling?\",
+		\"They'll be back soon enough...\",
+		\"Oh, the fight, a frantic work of art. Your pain, your burden, to flatten it, their heart...\",
+		\"How much more longer can you endure?\",
+		\"It's all uphill from here.\",
+		\"Just one more fight, one more spin, surely then you'll win...\",
+		\"99% of gamblers quit before they escape Tartarus...\"
+	] as Array[String]).pick_random()
+}
+"
+
+[sub_resource type="GDScript" id="GDScript_wpb14"]
+script/source = "extends Button
+
+@export var cam: Camera2D
+var already_pressed := false
+
+func _pressed() -> void {
+	if not already_pressed {
+		cam.position.y += get_viewport_rect().size.y
+		already_pressed = true
+	}
+}
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_wpb14"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_jtw3a"]
+font_color = Color(1, 1, 1, 0.654902)
+
+[sub_resource type="GDScript" id="GDScript_jtw3a"]
+script/source = "extends Button
+
+@export var evman: EventManager
+
+func _pressed() -> void {
+	var event := evman.event
+	GamestateManager.check_combat_result()
+	GamestateManager.encounter_enemy()
+	GamestateManager.previous_event = event
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgbyj"]
+shader = ExtResource("3_f0a7p")
+shader_parameter/vignette_intensity = 0.7
+shader_parameter/vignette_opacity = 0.30000001425
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
+[node name="Event" type="Control" unique_id=1331712075 node_paths=PackedStringArray("main_title", "main_desc", "options", "result", "effect", "audioplayer", "cam")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jtw3a")
+main_title = NodePath("EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer/Title")
+main_desc = NodePath("EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer/Description")
+options = NodePath("EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer/Options")
+result = NodePath("EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer/VBoxContainer/Description")
+effect = NodePath("EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer/VBoxContainer/Effect")
+audioplayer = NodePath("AudioStreamPlayer")
+cam = NodePath("Camera2D")
+titles = Array[String](["THE STARVED MAN", "THE BOY", "THE WEDDED WOMAN", "THE LYREMAN", "THE ARROW HEELED WARRIOR", "THE VOICES OF THE FORGOTTEN", "THE HARDENED WORLD", "THE FOOTPRINT"])
+descriptions = Array[String](["You stumble upon a thin, starving man, grasping at an apple above him. Yet despite him clawing and clawing, the apple remains just out of reach.
+
+“I know I can never reach it.” The starved man says. “But I try all the same.”", "You come across a boy, melted wings strapped to his back. He looks up at the endless abyss above your heads. Eyes full of regret too large for his age.", "You come across a woman with hollow eyes, white-knuckling a bouquet of roses. Despite years of wear and tear, you recognize her outfit as a wedding dress. 
+
+", "You hear him before you see him. A lyreman plucking at his strings, lost in the rhythm of his own music. You wonder if he even knows you’re there.", "On your path, you meet a man with the armor and build of an esteemed warrior. Yet, despite this, the man swings his sword wildly at the air around him, hoarse throat shouting in rage. His days in war may be finished, but his fight is clearly not over.
+
+It takes you a while to notice the arrow protruding from his heel.", "As you continue along your path, wandering souls below whisper incoherent fragments of memories from lives long forgotten.
+
+As you listen to this cacophony, the siren song of the aimless, a thought begins to form. Learning from the voices the living world has deemed unworthy of listening to, you suddenly find yourself capable of that which you were previously not.", "As you continue along your path, you cannot help but witness the horrors around you, the suffering in this underworld that you and so many others are forced to call an eternal home. 
+
+You will make the forces that be pay, whatever it may take to get there. For all those out there they have brought pain upon. How wonderful an idea.
+
+But you are not that noble. This is your revenge alone. This thought, perhaps disturbing, gives you more comfort than the last. The idea of retribution satisfies you.", "As you continue along your path, your gaze falls to the mud beneath your feet. Your eyes latch onto the impression of a bootprint, unable to look away. There is nothing special about this print, in fact, it is one you’ve seen many times before.
+
+It is one of your own.
+
+Knowing you have been on this path before, so many more times than you could ever possibly hope to remember, you are filled with a sudden resolve, one goal in mind: This time will not be like the last."])
+
+[node name="Bg" type="CanvasLayer" parent="." unique_id=1784019458]
+
+[node name="Sprite2D" type="Sprite2D" parent="Bg" unique_id=1507600358]
+position = Vector2(576, 328)
+scale = Vector2(2, 2)
+texture = ExtResource("2_f0a7p")
+
+[node name="EventDisplay" type="CanvasLayer" parent="." unique_id=1465513373]
+follow_viewport_enabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventDisplay" unique_id=759635625]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 1944.0
+grow_horizontal = 2
+theme = ExtResource("1_7bopq")
+
+[node name="Intro" type="CenterContainer" parent="EventDisplay/VBoxContainer" unique_id=48061799]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CascadeV3" type="Control" parent="EventDisplay/VBoxContainer/Intro" unique_id=1331055890]
+layout_mode = 2
+script = ExtResource("2_jtw3a")
+metadata/_custom_type_script = "uid://bgshvuao8jk2q"
+
+[node name="PanelContainer" type="PanelContainer" parent="EventDisplay/VBoxContainer/Intro/CascadeV3" unique_id=1125360591]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -9.5
+offset_right = 18.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EventDisplay/VBoxContainer/Intro/CascadeV3/PanelContainer" unique_id=336622499]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventDisplay/VBoxContainer/Intro/CascadeV3/PanelContainer/MarginContainer" unique_id=1484552033]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="EventDisplay/VBoxContainer/Intro/CascadeV3/PanelContainer/MarginContainer/VBoxContainer" unique_id=1744961633]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Another one bites the dust..."
+label_settings = SubResource("LabelSettings_7x4br")
+horizontal_alignment = 1
+script = SubResource("GDScript_7bopq")
+
+[node name="Button" type="Button" parent="EventDisplay/VBoxContainer/Intro/CascadeV3/PanelContainer/MarginContainer/VBoxContainer" unique_id=1557526931 node_paths=PackedStringArray("cam")]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Continue↓"
+script = SubResource("GDScript_wpb14")
+cam = NodePath("../../../../../../../../Camera2D")
+
+[node name="Choice" type="CenterContainer" parent="EventDisplay/VBoxContainer" unique_id=467607797]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="EventDisplay/VBoxContainer/Choice" unique_id=1724274604]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EventDisplay/VBoxContainer/Choice/PanelContainer" unique_id=1277201401]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer" unique_id=1072342210]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer" unique_id=322543504]
+layout_mode = 2
+text = "THE STARVED MAN"
+label_settings = SubResource("LabelSettings_wpb14")
+
+[node name="Description" type="Label" parent="EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer" unique_id=1970790259]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "You stumble upon a thin, starving man, grasping at an apple above him. Yet despite him clawing and clawing, the apple remains just out of reach.
+
+“I know I can never reach it.” The starved man says. “But I try all the same.”
+"
+autowrap_mode = 3
+
+[node name="Options" type="VBoxContainer" parent="EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer" unique_id=1816784997]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="EventDisplay/VBoxContainer/Choice/PanelContainer/MarginContainer/VBoxContainer/Options" unique_id=436145807 node_paths=PackedStringArray("cam")]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Walk away"
+script = SubResource("GDScript_wpb14")
+cam = NodePath("../../../../../../../../Camera2D")
+
+[node name="VoiceTrigger" type="VisibleOnScreenNotifier2D" parent="EventDisplay/VBoxContainer/Choice" unique_id=254071629]
+position = Vector2(610, 441)
+
+[node name="Result" type="CenterContainer" parent="EventDisplay/VBoxContainer" unique_id=2016491697]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="EventDisplay/VBoxContainer/Result" unique_id=343688373]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="EventDisplay/VBoxContainer/Result/PanelContainer" unique_id=2027941605]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer" unique_id=1105456343]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer/VBoxContainer" unique_id=831782987]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "When at first you reach towards his apple, the man protests, thinking the worst. But you assure him he has nothing to worry about. You pluck the apple off its tree, and hand it over. It is gone in an instant as the man devours it.
+
+Seeing a dream achieved, you feel revitalized."
+autowrap_mode = 3
+
+[node name="Effect" type="Label" parent="EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer/VBoxContainer" unique_id=2062910820]
+custom_minimum_size = Vector2(500, 30)
+layout_mode = 2
+text = "You grow stronger"
+label_settings = SubResource("LabelSettings_jtw3a")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="EventDisplay/VBoxContainer/Result/PanelContainer/MarginContainer/VBoxContainer" unique_id=454740433 node_paths=PackedStringArray("evman")]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Continue"
+script = SubResource("GDScript_jtw3a")
+evman = NodePath("../../../../../../..")
+
+[node name="VoiceTrigger" type="VisibleOnScreenNotifier2D" parent="EventDisplay/VBoxContainer/Result" unique_id=1179426333]
+position = Vector2(610, 441)
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=508582768]
+
+[node name="Vignette" type="ColorRect" parent="Overlay" unique_id=655909506]
+material = SubResource("ShaderMaterial_jgbyj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1984422193]
+position = Vector2(576, 324)
+position_smoothing_enabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=728680259]
+
+[connection signal="screen_entered" from="EventDisplay/VBoxContainer/Choice/VoiceTrigger" to="." method="_on_voice_trigger_1"]
+[connection signal="screen_entered" from="EventDisplay/VBoxContainer/Result/VoiceTrigger" to="." method="_on_voice_trigger_2"]

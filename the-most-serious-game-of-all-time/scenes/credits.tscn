@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://cudck3air31vg"]
+
+[ext_resource type="Texture2D" uid="uid://dmr08pwt0gq6i" path="res://assets/sprites/Styx.png" id="1_2ckv8"]
+[ext_resource type="Texture2D" uid="uid://c4voxfqj4xyx8" path="res://assets/sprites/Credits.png" id="2_0ctdu"]
+
+[sub_resource type="GDScript" id="GDScript_wpb14"]
+script/source = "extends Button
+
+
+func _pressed() -> void {
+	GamestateManager.switch_to.emit(Master.Scenes.MENU)
+}
+"
+
+[node name="Credits" type="Node2D" unique_id=279170729]
+
+[node name="Styx" type="Sprite2D" parent="." unique_id=1713693205]
+position = Vector2(568, 344)
+scale = Vector2(2, 2)
+texture = ExtResource("1_2ckv8")
+
+[node name="Credits" type="Sprite2D" parent="." unique_id=2141506691]
+position = Vector2(584.00006, 320)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_0ctdu")
+
+[node name="Button" type="Button" parent="." unique_id=559735414]
+offset_left = 16.0
+offset_top = 584.0
+offset_right = 219.0
+offset_bottom = 629.0
+theme_override_font_sizes/font_size = 32
+text = "Back to Menu"
+script = SubResource("GDScript_wpb14")
+
+[node name="Label" type="Label" parent="." unique_id=2080588616]
+offset_left = 384.0
+offset_top = 56.0
+offset_right = 634.0
+offset_bottom = 75.0
+text = "Lost Where the Forest Would Grow"
+
+[node name="Label2" type="Label" parent="." unique_id=153952563]
+offset_left = 384.0
+offset_top = 136.0
+offset_right = 634.0
+offset_bottom = 155.0
+text = "Dr Funny
+(@drfunnynot on discord)"
+
+[node name="Label3" type="Label" parent="." unique_id=1928790014]
+offset_left = 528.0
+offset_top = 208.0
+offset_right = 778.0
+offset_bottom = 249.0
+text = "Hannah,
+Programmer"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="." unique_id=1943341388]
+offset_left = 376.0
+offset_top = 312.0
+offset_right = 626.0
+offset_bottom = 353.0
+text = "Monarch,
+Technical Artist"
+
+[node name="Label6" type="Label" parent="." unique_id=788770524]
+offset_left = 208.0
+offset_top = 440.0
+offset_right = 458.0
+offset_bottom = 481.0
+text = "Tino (@tinooftime on discord),
+Narrative Designer"
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="." unique_id=556147144]
+offset_left = 720.0
+offset_top = 336.0
+offset_right = 970.0
+offset_bottom = 377.0
+text = "Jaime McMichael, Voice Actress
+(@J.McMichaelVO on instagram)"
+horizontal_alignment = 1
+
+[node name="Label8" type="Label" parent="." unique_id=509801439]
+offset_left = 880.0
+offset_top = 568.0
+offset_right = 1130.0
+offset_bottom = 631.0
+text = "STAmusic, Antony Kassis
+https://stamusic.me/
+Composer"
+
+[node name="Label5" type="Label" parent="." unique_id=822467496]
+offset_left = 488.0
+offset_top = 96.0
+offset_right = 738.0
+offset_bottom = 137.0
+theme_override_font_sizes/font_size = 20
+text = "Visual Artists"

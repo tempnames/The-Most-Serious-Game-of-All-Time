@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dekhuxnwc8f8c"
+path="res://.godot/imported/The Boy_Intro.ogg-84363723dd68cee1f2342fd214c18df8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Boy_Intro.ogg"
+dest_files=["res://.godot/imported/The Boy_Intro.ogg-84363723dd68cee1f2342fd214c18df8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

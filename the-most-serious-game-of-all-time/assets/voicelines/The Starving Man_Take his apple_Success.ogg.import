@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d0cmqn55ybj7y"
+path="res://.godot/imported/The Starving Man_Take his apple_Success.ogg-78610637ce6a8c9f441799c1f5e3f52c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/voicelines/The Starving Man_Take his apple_Success.ogg"
+dest_files=["res://.godot/imported/The Starving Man_Take his apple_Success.ogg-78610637ce6a8c9f441799c1f5e3f52c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://o23s7nf861t"]
+
+[sub_resource type="GDScript" id="GDScript_wpb14"]
+script/source = "extends Button
+
+func _pressed() -> void {
+	GamestateManager.new_game()
+}
+"
+
+[node name="Tutorial" type="CenterContainer" unique_id=341103979]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=592675725]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=732168242]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1398819589]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=199750689]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+text = "Quick rundown of the mechanics—
+
+Your hand is randomly determined based on which cards you roll.
+
+These cards may have Attack or Defense notches.
+* Attack notches have a lower bound and an upper bound (for example, Basic Attack has 1~4) indicating your potential range of damage
+* Defense notches have a lower bound, upper bound, and bonus (for example, Basic Block has 1~6 +2). The bonus is applied only if you target an enemy spinner with the block.
+Defenses, as alluded to, can target either yourself or an enemy's spinner. If they target yourself, the block applied lasts for the whole turn. If they target a specific spinner, they only block that spinner's damage, but often gain a bonus for doing so.
+Attacks can only target the opponent (for now…).
+
+During combat, spinners roll speed values. Higher speed values go first. Pay attention! You can't block an attack if you're slower than it.
+
+Why is this information presented in a big block of text rather than a natural diagetic tutorial? Unfortunately, we put all our budget into the REST of the game! Have fun."
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=437338072]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "I'm ready."
+script = SubResource("GDScript_wpb14")
